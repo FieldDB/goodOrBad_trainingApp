@@ -2,6 +2,7 @@ node_modules/
 typings/
 
 # Ignore compiled & Map File
-tsapp/*.js.map
-tsapp/*.js
+tsapp/**/*.js.map
+tsapp/**/*.js
 *.log
+*.DS_Store
