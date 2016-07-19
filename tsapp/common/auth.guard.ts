@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
   	// Here change that to the logic you want, cookie stuff, permission, etc. 
-    if (false) {
+    if (JSON.parse(localStorage.getItem("goodOrBadUser")).role === 'manager') {
       return true;
     }
 

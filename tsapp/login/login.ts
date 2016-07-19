@@ -7,12 +7,34 @@ import { CORE_DIRECTIVES } from '@angular/common';
   templateUrl: 'tsapp/login/login.html'
 })
 export class Login {
+	role: string;
+	constructor() {
+		this.role = JSON.parse(localStorage.getItem("goodOrBadUser")).role;
+	}
   createmanager() {
-    window.alert("You are a manager");
+    var user = {
+      email: "thisWillWork@gmail.com",
+      username: "awesomePerson",
+      name: "aGoodUser",
+      role: "manager"
+    };
+    localStorage.setItem('goodOrBadUser', JSON.stringify(user));
+    var retreaving = JSON.parse(localStorage.getItem("goodOrBadUser"));
+    console.log(retreaving);
+    this.role = retreaving.role;
   }
 
   createuser() {
-    window.alert("You are a user");
+    var user = {
+      email: "thisWillWork@gmail.com",
+      username: "awesomePerson",
+      name: "aGoodUser",
+      role: "Simple mortal"
+    };
+    localStorage.setItem('goodOrBadUser', JSON.stringify(user));
+    var retreaving = JSON.parse(localStorage.getItem("goodOrBadUser"));
+    console.log(retreaving);
+    this.role = retreaving.role;
   }
   
 }
