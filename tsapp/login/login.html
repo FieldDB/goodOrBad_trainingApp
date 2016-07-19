@@ -1,15 +1,6 @@
 <div class="login jumbotron center-block">
-  <h1>Login</h1>
-  <form role="form" (submit)="login($event, username.value, password.value)">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" #username class="form-control" id="username" placeholder="Username">
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" #password class="form-control" id="password" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-    <a [routerLink]="['/signup']">Click here to Signup</a>
-</form>
+  <h1>Login page here:</h1> 
+  <h3> Logic is handle in the Server (Node middleware with Passport and OAuth) directly.</h3>
+  <div (click)="createuser()">Click to be a fake user (temp solution while building)</div>
+  <div (click)="createmanager()">Click to be a fake <strong>Manager</strong> (temp solution while building)</div>
 </div>

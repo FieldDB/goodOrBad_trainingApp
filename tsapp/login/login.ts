@@ -1,37 +1,18 @@
 import { Component } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Http, Headers } from '@angular/http';
-import { contentHeaders } from '../common/headers';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 @Component({
   selector: 'login',
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES ],
-  templateUrl: 'tsapp/login/login.html',
-  styleUrls: [ 'tsapp/login/login.css' ]
+  directives: [ CORE_DIRECTIVES ],
+  templateUrl: 'tsapp/login/login.html'
 })
 export class Login {
-  constructor(public router: Router, public http: Http) {
+  createmanager() {
+    window.alert("You are a manager");
   }
 
-  login(event, username, password) {
-    event.preventDefault();
-    let body = JSON.stringify({ username, password });
-    this.http.post('http://localhost:3001/sessions/create', body, { headers: contentHeaders })
-      .subscribe(
-        response => {
-          localStorage.setItem('id_token', response.json().id_token);
-          this.router.navigate(['/pictpage']);
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+  createuser() {
+    window.alert("You are a user");
   }
-
-  signup(event) {
-    event.preventDefault();
-    this.router.navigate(['/signup']);
-  }
+  
 }
