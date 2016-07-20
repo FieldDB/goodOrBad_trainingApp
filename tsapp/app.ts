@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Navbar } from 'tsapp/navbar/navbar';
 
 @Component({
   selector: 'my-app',
   templateUrl: 'tsapp/app.html',
-  directives: [ ROUTER_DIRECTIVES ]
+  directives: [ ROUTER_DIRECTIVES, Navbar]
 })
 
 export class App {
