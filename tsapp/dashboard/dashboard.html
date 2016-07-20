@@ -1,0 +1,32 @@
+<h1>Dashboard Here for 
+	<span *ngIf='isManager'>Manager</span>
+	<span *ngIf='!isManager'>User</span>
+</h1>
+
+<div *ngIf='!isManager'>
+	I need to build: ### <strong>Trainee Analytics:</strong>
+	<ul>
+		<li>Nbr of images checked.</li>
+		<li>Fail rate on Good images</li>
+		<li>Fail rate on Bad images</li>
+		<li>Top 3 problematic decision (added or missing).</li>
+		<li>Average inspection time vs other. </li>
+		<li>Graph of success rate split in 100 img since the start.</li>
+		<li>Calender view of his progress (% succes vs NbrPer day D3?)</li>
+	</ul>
+</div>
+
+<div *ngIf='isManager'>
+	I need to build: <strong>Trainer Analytics:</strong>
+	<ul>
+		<li>Success rate on Bad images.</li>
+		<li>Success rate on Good images.</li>
+		<li>Images that is mostly mistaked.</li>
+		<li>Images that were Contested by trainee + All reason listed of all user. --> need username + Text + All missing or extra item.</li>
+		<li>Reason that fail the most.</li>
+		<li>Average time for inspection per user.</li>
+		<li>Total system Good img vs Bad img.</li>
+		<li>Total system Nbr Error 1, 2, 3, 4... </li>
+		<li>Calender view of all user progress (% succes vs NbrPer day D3?).</li>
+	</ul>
+</div>

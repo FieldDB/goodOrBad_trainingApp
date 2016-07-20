@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector:'dashboard',
-	template:'<h1>Dashboard Here</h1>'
+	templateUrl:'tsapp/dashboard/dashboard.html',
+	directives: [ NgIf ]
 })
 
 export class Dashboard{
-	
+	isManager: boolean;
+
+	constructor() {
+		this.isManager = JSON.parse(localStorage.getItem("goodOrBadUser")).role === 'manager';
+	}
 }
