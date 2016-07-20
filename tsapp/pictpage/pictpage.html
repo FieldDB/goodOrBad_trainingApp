@@ -1,5 +1,29 @@
 <div>
   <div class="jumbotron centered">
-    <h1>Welcome to picture page</h1>
+    <h1 (click)='getOneImg()'>Welcome to picture page</h1>
+  </div>
+  <div>Title</div>
+  <pre *ngIf='somejson'>{{somejson | json}}</pre>
+  <div class="row">
+  	<div class="col-sm-6">Img</div>
+  	<div class="col-sm-6">
+  		<ul>
+  			<li>Check1</li>
+  			<li>Check2</li>
+  			<li>Check3</li>
+  			<li>Check4</li>
+  			<li>Check5</li>
+  		</ul>
+  	</div>
+  </div>
+  <div class="row">
+  	<div>Comment box?</div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-6">Accept</div>
+  	<div class="col-sm-6">Reject</div>
+  </div>
+  <div class="row">
+  	<div>On Click Show this, and hide the Accept/Reject</div>
   </div>
 </div>
