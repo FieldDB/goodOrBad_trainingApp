@@ -1,35 +1,39 @@
-import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, NgIf, NgFor} from '@angular/common';
+import { Component, OnInit} from '@angular/core';
+import { CORE_DIRECTIVES, NgIf, NgFor, NgClass} from '@angular/common';
 import { Http, Response } from '@angular/http';
 
-import { GoldenRow, ResultValue, ArrOfCriteria } from 'tsapp/data-structure';
-import { CommService } from 'tsapp/pictpage/commService';
+import { GoldenRow, ResultValue, CriteriaObject} from '../data-structure';
+import { ArrOfCriteria } from '../data-fake';
+import { CommService } from './commService';
 
 @Component({
   selector: 'pictpage',
-  directives: [ CORE_DIRECTIVES, NgIf ],
+  directives: [ CORE_DIRECTIVES, NgIf, NgClass ],
   templateUrl: 'tsapp/pictpage/pictpage.html',
   styleUrls: [ 'tsapp/pictpage/pictpage.css' ]
 })
 
 export class Pictpage implements OnInit {
 	imgToInspect: GoldenRow;
-	resultValue: ResultValue = {};
-	criterialist: string[];
+	resultValue: ResultValue;
+	criterialist: CriteriaObject[];
 	error: any;
 	submited: boolean;
+	sliderStyle: boolean = true;
 	blockSubmit: boolean = true;
 	initialTimeStamp: number;
 
 	constructor(private commService: CommService){}
 	ngOnInit() {
-		this.resultValue.username = JSON.parse(localStorage.getItem("goodOrBadUser")).username;
-		this.resultValue.delta_array = [];
-		this.getOneImg();
 		this.criterialist = ArrOfCriteria;
+		this.getOneImg();
 	}
 
 	getOneImg() {
+		// This start the Whole process again.
+		this.resultValue = {};
+		this.resultValue.username = JSON.parse(localStorage.getItem("goodOrBadUser")).username;
+		this.resultValue.delta_array = [];
 		this.submited = false; //we get a new img.
 		this.initialTimeStamp = Date.now();
 		this.resultValue.user_comments = "";
@@ -50,6 +54,7 @@ export class Pictpage implements OnInit {
 
   setCriteriaX(index, target, value) {
   	this.blockSubmit = false;
+  	console.log("Selected value is: ",value);
   	if(!value) {
   		value = Math.round(Math.random()*10); // just for testing until I have my slider setup
   	}
@@ -76,6 +81,21 @@ export class Pictpage implements OnInit {
   	} 
 
   	this.submited = true;
+  }
+
+  sliderClass(value) {
+  	if(!this.submited) {
+  		// Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function... 
+  		if(value === null || value === undefined) {return {"default_null_value": true}; }
+  	} else {
+  	// TODO: on submit change the class Logic to set the class Green or Red depending if the user was succedful or Failed the criteria. (Check with tolerances)
+  		if(value === null || value === undefined) {return {"default_null_value": true}; }
+  		if(Math.abs(value) <= 1) {
+  			return {"slider_passing_value": true};
+  		} else {
+  			return {"slider_failing_value": true};
+  		}
+  	}
   }
 
 }

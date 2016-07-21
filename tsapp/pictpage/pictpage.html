@@ -8,23 +8,38 @@
 	  	<img class="col-sm-6 text-center" (click)='openImgInModal(imgToInspect.url)' src="{{imgToInspect.url}}">
 	  	<div class="col-sm-6">
 	  			<div *ngFor="let criteria of criterialist; let i = index">
-	  				<div>{{i}} - {{criteria}}</div>
-	  				<div *ngIf='!submited'>
-	  					<!-- After submition show the user the difference. -->
-		  				<div *ngIf='imgToInspect.criteria_array_converted[i]' (click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i])'>{{imgToInspect.criteria_array_converted[i]}}: SLIDER HERE</div>
-		  				<div *ngIf='!imgToInspect.criteria_array_converted[i]'>
-		  					<strong>No criteria found.</strong>
+	  				<div *ngIf='criteria.active'>
+		  				<div>{{criteria.crit}} - {{imgToInspect.criteria_array_converted[i]}} - {{resultValue.delta_array[i]}}</div>
+		  				<div>
+		  					<!-- After submition show the user the difference. -->
+			  				<div *ngIf='imgToInspect.criteria_array_converted[i]'>
+			  					<input 
+			  						class="criteriaslider" 
+			  						[ngClass]='sliderClass(resultValue.delta_array[i])'
+			  						*ngIf=sliderStyle 
+			  						min=0, 
+			  						max=10 
+			  						steps=1 
+			  						type="range" 
+			  						[disabled]="submited" 
+			  						#slider
+			  						(change)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], slider.value)'>
+			  					<span *ngIf=!sliderStyle (click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 10)'>TrueFalse Switch</span>
+			  				</div>
+			  				<div *ngIf='!imgToInspect.criteria_array_converted[i]'>
+			  					<strong>No criteria found.</strong>
+			  				</div>
 		  				</div>
-	  				</div>
-	  				<div *ngIf='submited'>
-	  					Difference: {{resultValue.delta_array[i]}}
-	  				</div>
+		  			</div>
 	  			</div>
 	  	</div>
 	  </div>
 	  <div class="row">
+	  	<div class="col-xs-12 bg-info">{{imgToInspect.description}}</div>
+	  </div>
+	  <div class="row">
 	  	<div class="col-xs-12">
-	  		<textarea class="full_comment_box" [(ngModel)]="resultValue.user_comments"></textarea>
+	  		<textarea class="full_comment_box" [disabled]='submited' [(ngModel)]="resultValue.user_comments"></textarea>
 	  	</div>
 	  </div>
 	  <div class="row" *ngIf='!submited'>
@@ -37,7 +52,12 @@
 	  	<pre >Initial: {{imgToInspect | json}}</pre>
 	  </div>
 	  <div class="row" *ngIf='submited'>
-	  	<div>On Click Show this, and hide the Accept/Reject</div>
+	  	<div class="col-xs-12 bg-info" [ngClass]='{"bg-danger": !resultValue.success}'>Explanation: {{imgToInspect.explanation}}</div>
+	  </div>
+	  <div class="row" *ngIf='submited'>
+	  	<div class="col-xs-12 text-center">
+	  		<button class="btn btn-info validationbtn" (click)='getOneImg()'>Next</button>
+	  	</div>
 	  	<pre>Result: {{resultValue | json}}</pre>
 	  </div>
   </div>

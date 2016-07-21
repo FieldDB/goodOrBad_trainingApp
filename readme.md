@@ -7,7 +7,7 @@ A friend asked to make a tranning app that would help her train people. So why n
 
 ## Flow
 ### Page 1: Auth + What to do Box.
-The user will login with his user.
+At this level the user should already be loggued-in via Google & Passport (or else).
 
 ### Page 1.1: Main Test
 Algo: Randomize the selection on only img the user never saw. 

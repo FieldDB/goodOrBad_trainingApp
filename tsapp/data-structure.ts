@@ -12,7 +12,7 @@ export class GoldenRow {
 
 export class ResultValue {
 	username: string;
-	filenameid: number;
+	filenameid: string;
 	success: boolean;
 	fail_passed: boolean;
 	positive_failed: boolean;
@@ -24,13 +24,11 @@ export class ResultValue {
 	timeinsec: number;
 }
 
-exports.ArrOfCriteria = ["Criteria 1 to display",
-	"Criteria 2 to display",
-	"Criteria 3 to display",
-	"Criteria 4 to display",
-	"Criteria 5 to display",
-	"Criteria 6 to display",
-	"Long Criteria 7 to display the whole text for the user to see",
-	"Another Longer Criteria 8 to display the whole text for the user to see so he can make a decision.",
-	"Shorty",
-	"Should not have any slider since no critera were set"]
+export class CriteriaObject {
+	crit: string;
+	active: boolean; // Impossible to predict everything, so eventually in the future we want to remove some criteria.
+	// Option1: Having the DB have 1 cell per criteria --> If I want to add or remove it I have to change the DB and the code. Bad.
+	// Option2 (currently selected): Having the criteria as an array in the cell --> Fast to add new one and infite amount, Bad for sorting, Bad if we want to remove some on the way.
+	// Since we have option2 we add flexibility by adding a Show/hide flag
+	// Option3 would be to take option2 and instead of array of value/null we could strignify a object to have key-value pair, but it is heavier on the DB.
+}

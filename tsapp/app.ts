@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Navbar } from 'tsapp/navbar/navbar';
-import { CommService } from 'tsapp/pictpage/commService';
+import { Navbar } from './navbar/navbar';
+import { CommService } from './pictpage/commService';
 
 @Component({
   selector: 'my-app',
