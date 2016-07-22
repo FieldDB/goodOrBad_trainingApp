@@ -22,7 +22,7 @@ export class Pictpage implements OnInit {
 	error: any;
 	submited: boolean;
 	sliderStyle: boolean = true; //This is where we change the View to be a Slider Or a True/False buttons.
-	blockSubmit: boolean = true;
+	blockSubmit: boolean;
 	initialTimeStamp: number;
 
 	constructor(private commService: CommService){}
@@ -33,6 +33,7 @@ export class Pictpage implements OnInit {
 
 	getOneImg() {
 		// This start the Whole process again.
+		this.blockSubmit = true;
 		this.resultValue = {
 			"username": JSON.parse(localStorage.getItem("goodOrBadUser")).username,
 			"filenameid": "string",
@@ -67,10 +68,6 @@ export class Pictpage implements OnInit {
     					this.resultValue.filenameid = this.imgToInspect.filename;  //This should be a OID or something unique.
     					this.resultValue.type = this.imgToInspect.type; //This could be fetch directly in the SQL by joining table, but I dont like joint of big table for 1 value only.
     			});
-  }
-
-  openImgInModal(url) {
-  	window.alert("opening img " + url);
   }
 
   setCriteriaX(index, target, value) {
