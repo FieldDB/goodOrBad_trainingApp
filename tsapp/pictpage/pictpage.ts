@@ -3,6 +3,7 @@ import { CORE_DIRECTIVES, NgIf, NgFor, NgClass} from '@angular/common';
 import { Http, Response } from '@angular/http';
 
 import { GoldenRow, ResultValue, CriteriaObject} from '../data-structure';
+import { GetOnlyActive } from './criteria.pipe';
 import { ArrOfCriteria } from '../data-fake';
 import { CommService } from './commService';
 
@@ -10,7 +11,8 @@ import { CommService } from './commService';
   selector: 'pictpage',
   directives: [ CORE_DIRECTIVES, NgIf, NgClass ],
   templateUrl: 'tsapp/pictpage/pictpage.html',
-  styleUrls: [ 'tsapp/pictpage/pictpage.css' ]
+  styleUrls: [ 'tsapp/pictpage/pictpage.css' ],
+  pipes: [ GetOnlyActive ]
 })
 
 export class Pictpage implements OnInit {

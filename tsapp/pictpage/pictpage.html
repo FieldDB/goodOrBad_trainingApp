@@ -7,8 +7,7 @@
 	  <div class="row">
 	  	<img class="col-sm-6 text-center" (click)='openImgInModal(imgToInspect.url)' src="{{imgToInspect.url}}">
 	  	<div class="col-sm-6">
-	  			<div *ngFor="let criteria of criterialist; let i = index">
-	  				<div *ngIf='criteria.active'>
+	  			<div *ngFor="let criteria of (criterialist | getOnlyActive); let i = index">
 		  				<div>{{criteria.crit}} - {{imgToInspect.criteria_array_converted[i]}} - {{resultValue.delta_array[i]}}</div>
 		  				<div>
 		  					<!-- After submition show the user the difference. -->
@@ -46,7 +45,6 @@
 			  					<strong>No criteria found.</strong>
 			  				</div>
 		  				</div>
-		  			</div>
 	  			</div>
 	  	</div>
 	  </div>
