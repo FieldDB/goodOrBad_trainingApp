@@ -21,7 +21,7 @@ export class Pictpage implements OnInit {
 	criterialist: CriteriaObject[];
 	error: any;
 	submited: boolean;
-	sliderStyle: boolean = false; //This is where we change the View to be a Slider Or a True/False buttons.
+	sliderStyle: boolean = true; //This is where we change the View to be a Slider Or a True/False buttons.
 	blockSubmit: boolean = true;
 	initialTimeStamp: number;
 
@@ -118,9 +118,9 @@ export class Pictpage implements OnInit {
   	}
   }
 
-  btnClass(value:number, target:number) {
+  btnClass(value:number, target:number, resultValue:number) {
   		// Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function... 
-		if(value === null || value === undefined) {
+		if(value === null || value === undefined || resultValue === null || resultValue === undefined) {
 			return "btn-info"; 
 		} else if (value === 1 && target === 1) {
 			return "btn-success";

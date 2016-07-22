@@ -7,45 +7,54 @@
 	  <div class="row">
 	  	<img class="col-sm-6 text-center" (click)='openImgInModal(imgToInspect.url)' src="{{imgToInspect.url}}">
 	  	<div class="col-sm-6">
-	  			<div *ngFor="let criteria of (criterialist | getOnlyActive); let i = index">
-		  				<div>{{criteria.crit}} - {{imgToInspect.criteria_array_converted[i]}} - {{resultValue.delta_array[i]}}</div>
-		  				<div>
-		  					<!-- After submition show the user the difference. -->
-			  				<div *ngIf='imgToInspect.criteria_array_converted[i] != null'>
-			  					<input 
-			  						class="criteriaslider" 
-			  						[ngClass]='sliderClass(resultValue.delta_array[i])'
-			  						*ngIf=sliderStyle 
-			  						min=0, 
-			  						max=10 
-			  						steps=1 
-			  						type="range" 
-			  						[disabled]="submited" 
-			  						#slider
-			  						(change)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], slider.value)'>
-			  					<div [ngClass]="{'bg-danger': submited && resultValue.delta_array[i] != 0}">
-				  					<div *ngIf=!sliderStyle class="btn-group btn-toggle" #btnGroup>
-				  					  <button #btnBad class="btn btn-lg btn-default"
-				  					  	[disabled]="submited"
-				  					  	[ngClass]='btnClass(btnGroup.value, 0)'
-				  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 0);btnGroup.value = 0'>
-				  					  	Bad
-				  					  </button>
-				  					  <button #btnGood class="btn btn-lg btn-default" 
-				  					  	[disabled]="submited"
-				  					  	[ngClass]='btnClass(btnGroup.value, 1)'
-				  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 1);btnGroup.value = 1'>
-				  					  	<!-- This seems strange, but if we are on Target = Good, otherwise always 1 off -->
-				  					  	Good
-				  					  </button>
-				  					</div>
-				  				</div>
-			  				</div>
-			  				<div *ngIf='imgToInspect.criteria_array_converted[i] == null'>
-			  					<strong>No criteria found.</strong>
-			  				</div>
+  			<div *ngFor="let criteria of (criterialist | getOnlyActive); let i = index" class="row">
+  				<div class="col-xs-12" [ngClass]='{"col-xs-10": submited }'>
+	  				<div>{{criteria.crit}}</div>
+  					<!-- After submition show the user the difference. -->
+	  				<div *ngIf='imgToInspect.criteria_array_converted[i] != null'>
+	  					<input 
+	  						class="criteriaslider" 
+	  						[ngClass]='sliderClass(resultValue.delta_array[i])'
+	  						*ngIf=sliderStyle 
+	  						min=0,
+	  						max=10
+	  						steps=1
+	  						type="range"
+	  						[disabled]="submited"
+	  						#slider
+	  						(change)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], slider.value)'>
+	  					<div>
+		  					<div *ngIf=!sliderStyle class="btn-group btn-toggle" #btnGroup>
+		  					  <button #btnBad class="btn btn-lg btn-default"
+		  					  	[disabled]="submited"
+		  					  	[ngClass]='btnClass(btnGroup.value, 0, resultValue.delta_array[i])'
+		  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 0);btnGroup.value = 0'>
+		  					  	Bad
+		  					  </button>
+		  					  <button #btnGood class="btn btn-lg btn-default" 
+		  					  	[disabled]="submited"
+		  					  	[ngClass]='btnClass(btnGroup.value, 1, resultValue.delta_array[i])'
+		  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 1);btnGroup.value = 1'>
+		  					  	<!-- This seems strange, but if we are on Target = Good, otherwise always 1 off -->
+		  					  	Good
+		  					  </button>
+		  					</div>
 		  				</div>
-	  			</div>
+	  				</div>
+	  				<div *ngIf='imgToInspect.criteria_array_converted[i] == null'>
+	  					<strong>No criteria found.</strong>
+	  				</div>
+  				</div>
+  				<div *ngIf='submited && sliderStyle' [ngClass]="{'bg-danger': submited && resultValue.delta_array[i] != 0, 'col-xs-2': submited}">
+  					<span *ngIf="resultValue.delta_array[i] > 1">Too Low / Loose? <!-- Meaning the target is Way higher than the selected value --> </span>
+  					<span *ngIf="resultValue.delta_array[i] <= 1 && resultValue.delta_array[i] >= -1">Around target</span>
+  					<span *ngIf="resultValue.delta_array[i] < -1"> Too High / Strict? <!-- Meaning the target is lower than the selected value --> </span>
+  					{{resultValue.delta_array[i]}}
+  				</div>
+  				<div *ngIf='submited && !sliderStyle' [ngClass]="{'bg-danger': submited && resultValue.delta_array[i] != 0, 'col-xs-2': submited}">
+  					<span *ngIf="resultValue.delta_array[i] == 1 || resultValue.delta_array[i] == -1">Wrong</span>
+  				</div>
+  			</div>
 	  	</div>
 	  </div>
 	  <div class="row">
