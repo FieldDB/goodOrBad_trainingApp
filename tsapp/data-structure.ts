@@ -8,6 +8,7 @@ export class GoldenRow {
 	passfail: boolean;
 	explanation: string;
 	type: string;
+	info_url:string;
 }
 
 export class ResultValue {
