@@ -3,6 +3,7 @@ import { Pictpage } from './pictpage/pictpage';
 import { Login } from './login/login';
 import { Dashboard } from './dashboard/dashboard';
 import { Home } from './home/home';
+import { Golden } from './golden/golden';
 import { AuthGuard } from './common/auth.guard';
 
 // The Login/Security is handled by the Node module encapsulating this app. 
@@ -12,6 +13,7 @@ export const routes: RouterConfig = [
   { path: 'dashboard', component: Dashboard },
   { path: 'pictpage',   component: Pictpage, canActivate: [AuthGuard] },
   { path: 'home', component: Home },
+  { path: 'golden', component: Golden },
   { path: '',       component:  Home },
   { path: '**',     component: Home }
 ];
