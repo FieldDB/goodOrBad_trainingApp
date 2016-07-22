@@ -12,7 +12,7 @@
 		  				<div>{{criteria.crit}} - {{imgToInspect.criteria_array_converted[i]}} - {{resultValue.delta_array[i]}}</div>
 		  				<div>
 		  					<!-- After submition show the user the difference. -->
-			  				<div *ngIf='imgToInspect.criteria_array_converted[i]'>
+			  				<div *ngIf='imgToInspect.criteria_array_converted[i] != null'>
 			  					<input 
 			  						class="criteriaslider" 
 			  						[ngClass]='sliderClass(resultValue.delta_array[i])'
@@ -24,9 +24,25 @@
 			  						[disabled]="submited" 
 			  						#slider
 			  						(change)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], slider.value)'>
-			  					<span *ngIf=!sliderStyle (click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 10)'>TrueFalse Switch</span>
+			  					<div [ngClass]="{'bg-danger': submited && resultValue.delta_array[i] != 0}">
+				  					<div *ngIf=!sliderStyle class="btn-group btn-toggle" #btnGroup>
+				  					  <button #btnBad class="btn btn-lg btn-default"
+				  					  	[disabled]="submited"
+				  					  	[ngClass]='btnClass(btnGroup.value, 0)'
+				  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 0);btnGroup.value = 0'>
+				  					  	Bad
+				  					  </button>
+				  					  <button #btnGood class="btn btn-lg btn-default" 
+				  					  	[disabled]="submited"
+				  					  	[ngClass]='btnClass(btnGroup.value, 1)'
+				  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 1);btnGroup.value = 1'>
+				  					  	<!-- This seems strange, but if we are on Target = Good, otherwise always 1 off -->
+				  					  	Good
+				  					  </button>
+				  					</div>
+				  				</div>
 			  				</div>
-			  				<div *ngIf='!imgToInspect.criteria_array_converted[i]'>
+			  				<div *ngIf='imgToInspect.criteria_array_converted[i] == null'>
 			  					<strong>No criteria found.</strong>
 			  				</div>
 		  				</div>
