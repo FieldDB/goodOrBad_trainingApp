@@ -1,6 +1,6 @@
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { GoldenRow }      from '../data-structure';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { GoldenRow, ResultValue } from '../data-structure';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
@@ -11,10 +11,21 @@ import 'rxjs/Rx';
 @Injectable()
 export class CommService {
   constructor (private http: Http) {}
+
   private randgoldenUrl = 'http://localhost:8010/api/view/randgolden';  // URL to web api
-  
   getDbImg() : Observable<GoldenRow[]> {
     return this.http.get(this.randgoldenUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  private resultUrl = 'http://localhost:8010/api/result';  // URL to web api
+  postDbResult (result: ResultValue): Observable<ResultValue> {
+    let body = JSON.stringify(result);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(this.resultUrl, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

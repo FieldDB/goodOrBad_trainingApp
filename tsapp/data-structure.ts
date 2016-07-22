@@ -13,7 +13,7 @@ export class GoldenRow {
 
 export class ResultValue {
 	username: string;
-	filenameid: string;
+	filenameid: number;
 	success: boolean;
 	fail_passed: boolean;
 	positive_failed: boolean;

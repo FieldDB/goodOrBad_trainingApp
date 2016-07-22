@@ -24,6 +24,9 @@ export class Pictpage implements OnInit {
 	sliderStyle: boolean = true; //This is where we change the View to be a Slider Or a True/False buttons.
 	blockSubmit: boolean;
 	initialTimeStamp: number;
+	oidOfResult: number;
+	contestComments: string;
+	contest: boolean = false;
 
 	constructor(private commService: CommService){}
 	ngOnInit() {
@@ -34,9 +37,12 @@ export class Pictpage implements OnInit {
 	getOneImg() {
 		// This start the Whole process again.
 		this.blockSubmit = true;
+		this.oidOfResult = 0;
+		this.contestComments = "";
+		this.contest = false; // We dont want to complaint before starting ;).
 		this.resultValue = {
 			"username": JSON.parse(localStorage.getItem("goodOrBadUser")).username,
-			"filenameid": "string",
+			"filenameid": 0,
 			"success": null,
 			"fail_passed": null,
 			"positive_failed": null,
@@ -65,7 +71,7 @@ export class Pictpage implements OnInit {
     					}
     					this.imgToInspect
     					// Also populate the Default Result to send back at the end.
-    					this.resultValue.filenameid = this.imgToInspect.filename;  //This should be a OID or something unique.
+    					this.resultValue.filenameid = this.imgToInspect.oid;  //This should be a OID or something unique.
     					this.resultValue.type = this.imgToInspect.type; //This could be fetch directly in the SQL by joining table, but I dont like joint of big table for 1 value only.
     			});
   }
@@ -79,8 +85,6 @@ export class Pictpage implements OnInit {
   }
 
   submitForm(result) {
-  	window.alert('Submitting the form (fakeing it, so fix me)');
-  	
   	// Here submit the img and when we have feedback(promesses) we can call it submitted.
   	this.resultValue.timeinsec = Math.round((Date.now() - this.initialTimeStamp)/1000); //Time in Second it took.
   	this.resultValue.delta_criteria_array = JSON.stringify(this.resultValue.delta_array);
@@ -97,10 +101,26 @@ export class Pictpage implements OnInit {
   		this.resultValue.fail_passed = true;
   	} 
 
-  	this.submited = true;
+  	this.commService.postDbResult(this.resultValue)
+  									.subscribe(
+  	                     serverAnswer  => {
+  												this.submited = true;
+  	                     	this.oidOfResult = serverAnswer.oid;
+  	                     }),
+  	                     error => {
+  	                     	console.log("ERROR:", error)
+  	                     });
+
   }
 
-  sliderClass(delta : number) {
+  contestDecision() {
+  	// Here, Get the this.oidOfResult, add the explanation and submit the form.
+  	// Add info on the last Post and move on.
+  	window.alert('TODO: Make the node side and fix me after.');
+  	getOneImg();
+  }
+
+  sliderClass(delta: number) {
   	if(!this.submited) {
   		// Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function... 
   		if(delta === null || delta === undefined) {return "default_null_value"; }
