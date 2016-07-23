@@ -11,7 +11,7 @@ import { CommService } from './commService';
   selector: 'pictpage',
   directives: [ CORE_DIRECTIVES, NgIf, NgClass ],
   templateUrl: 'tsapp/pictpage/pictpage.html',
-  styleUrls: [ 'tsapp/pictpage/pictpage.css' ],
+  styleUrls: [ 'tsapp/pictpage/pictpage.css', 'tsapp/common/slider-style.css' ],
   pipes: [ GetOnlyActive ]
 })
 
@@ -51,7 +51,8 @@ export class Pictpage implements OnInit {
 			"inspection_date": '',
 			"user_comments": '',
 			"type": '',
-			"timeinsec": 0
+			"timeinsec": 0,
+			"oid": null
 		};
 		this.submited = false; //we get a new img.
 		this.initialTimeStamp = Date.now();
@@ -106,18 +107,17 @@ export class Pictpage implements OnInit {
   	                     serverAnswer  => {
   												this.submited = true;
   	                     	this.oidOfResult = serverAnswer.oid;
-  	                     }),
+  	                     },
   	                     error => {
-  	                     	console.log("ERROR:", error)
+  	                     	console.log("ERROR:", error);
   	                     });
-
   }
 
   contestDecision() {
   	// Here, Get the this.oidOfResult, add the explanation and submit the form.
   	// Add info on the last Post and move on.
   	window.alert('TODO: Make the node side and fix me after.');
-  	getOneImg();
+  	this.getOneImg();
   }
 
   sliderClass(delta: number) {

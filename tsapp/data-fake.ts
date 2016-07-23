@@ -1,5 +1,5 @@
 // Returning some fake data to who need it.
-import { CriteriaObject } from './data-structure';
+import { CriteriaObject, GoldenRow } from './data-structure';
 
 export var ArrOfCriteria: CriteriaObject[] = [
 	{crit:"Criteria 1 to display", active: true},
@@ -13,3 +13,17 @@ export var ArrOfCriteria: CriteriaObject[] = [
 	{crit:"Shorty", active: true},
 	{crit:"Should not have any slider since no critera were set", active: true}
 ];
+
+export var BlankGoldenImg: GoldenRow = {
+	filename: "",
+	url: "",
+	description: "",
+	criteria_array: "",
+	criteria_array_converted: [],
+	creation_date: "",
+	passfail: null,
+	explanation: "",
+	type: "",
+	info_url: "",
+	oid: null
+}

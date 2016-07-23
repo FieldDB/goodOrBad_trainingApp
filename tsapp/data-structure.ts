@@ -9,6 +9,7 @@ export class GoldenRow {
 	explanation: string;
 	type: string;
 	info_url:string;
+	oid: number;
 }
 
 export class ResultValue {
@@ -23,6 +24,7 @@ export class ResultValue {
 	user_comments: string;
 	type: string;
 	timeinsec: number;
+	oid: number;
 }
 
 export class CriteriaObject {
