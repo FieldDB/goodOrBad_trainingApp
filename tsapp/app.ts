@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 import { Navbar } from './navbar/navbar';
-import { CommService } from './pictpage/commService';
+import { CommService } from './commService';
 
 @Component({
   selector: 'my-app',

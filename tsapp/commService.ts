@@ -1,6 +1,6 @@
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { GoldenRow, ResultValue } from '../data-structure';
+import { GoldenRow, ResultValue } from './data-structure';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';

@@ -5,7 +5,7 @@ import { Http, Response } from '@angular/http';
 import { GoldenRow, ResultValue, CriteriaObject} from '../data-structure';
 import { GetOnlyActive } from './criteria.pipe';
 import { ArrOfCriteria } from '../data-fake';
-import { CommService } from './commService';
+import { CommService } from '../commService';
 
 @Component({
   selector: 'pictpage',
