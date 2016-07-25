@@ -26,11 +26,8 @@ export class Golden implements OnInit{
 	}
 
 	resetBlankImg() {
-		console.log("Resseting!!" this.goldenDetails);
-	  this.defaultDataService.blankGoldenImg().then(data => {
-	  	const tempstuff:GoldenRow = data;
-	  	this.goldenDetails = tempstuff;
-		console.log("Resseted!!" this.goldenDetails);
+	  	this.defaultDataService.blankGoldenImg().then(data => {
+	  		this.goldenDetails = data;
 		});
 
 	}
@@ -47,8 +44,13 @@ export class Golden implements OnInit{
 
 	private getPreciceImg(imgOid:number) {
 		this.commService.getPreciceGolden(imgOid)
-				.subscribe((arrayOf1:GoldenRow[])=>{
-					this.goldenDetails = arrayOf1[0];
+				.subscribe((arrayOf1:GoldenRow[]) => {
+					if(arrayOf1[0]) {
+						this.goldenDetails = arrayOf1[0];
+						this.goldenDetails.criteria_array_converted = JSON.parse(this.goldenDetails.criteria_array);
+					} else {
+						this.resetBlankImg();
+					}
 				},
 				error => {
   	               	console.log("ERROR:", error);

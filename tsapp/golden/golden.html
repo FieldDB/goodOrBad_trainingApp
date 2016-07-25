@@ -69,7 +69,7 @@ Add a "send" on enter key.
 
 		  <div *ngFor='let criteria of criterialist; let i = index;'>
 		  	{{criteria.crit}} <strong *ngIf="!criteria.active" class="bg-danger">- Disabled</strong>
-		  	<div class="row text-center" *ngIf="criteria.active">
+		  	<div class="row text-center" *ngIf="goldenDetails.criteria_array_converted && criteria.active">
 		  		<div class="col-xs-1">
 		  			<i *ngIf='goldenDetails.criteria_array_converted[i] != null && goldenDetails.criteria_array_converted[i] <=5'
 		  				class="glyphicon glyphicon-fire text-danger"></i></div>
@@ -86,7 +86,7 @@ Add a "send" on enter key.
 			  		[(ngModel)]="goldenDetails.criteria_array_converted[i]">
 			  	</div>
 		  		<div class="col-xs-1"><i *ngIf='goldenDetails.criteria_array_converted[i] >5'class="glyphicon glyphicon-ok text-success"></i></div>
-		  		<div class="col-xs-1" (click)='goldenDetails.criteria_array_converted[i] = null'><i class="glyphicon glyphicon-remove"></i></div>
+		  		<div class="col-xs-1" (click)='goldenDetails.criteria_array_converted[i] = null'><i *ngIf="goldenDetails.criteria_array_converted[i]" class="glyphicon glyphicon-remove"></i></div>
 		  		
 		  	</div>
 		  </div>

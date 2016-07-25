@@ -32,12 +32,12 @@ export class CommService {
   }
 
   // Golden Sample page
-  // getPreciceGolden(imgOid:number) : Observable<GoldenRow[]> {
-  //   let goldenImg:string = this.baseUrl + 'api/golden/' + imgOid;
-  //   return this.http.get(goldenImg)
-  //                   .map(this.extractData)
-  //                   .catch(this.handleError);
-  // }
+  getPreciceGolden(imgOid:number) : Observable<GoldenRow[]> {
+    let goldenImg:string = this.baseUrl + 'api/golden/' + imgOid;
+    return this.http.get(goldenImg)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 
   private extractData(res: Response) {
     let body = res.json();
