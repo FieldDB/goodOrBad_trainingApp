@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 
 import { GoldenRow, ResultValue, CriteriaObject} from '../data-structure';
 import { GetOnlyActive } from './criteria.pipe';
-import { ArrOfCriteria } from '../data-fake';
+import { DefaultDataService } from '../data.service';
 import { CommService } from '../commService';
 
 @Component({
@@ -13,7 +13,7 @@ import { CommService } from '../commService';
   templateUrl: 'tsapp/pictpage/pictpage.html',
   styleUrls: [ 'tsapp/pictpage/pictpage.css', 'tsapp/common/slider-style.css' ],
   pipes: [ GetOnlyActive ],
-  providers: [ CommService ]
+  providers: [ CommService, DefaultDataService ]
 })
 
 export class Pictpage implements OnInit {
@@ -29,11 +29,15 @@ export class Pictpage implements OnInit {
 	contestComments: string;
 	contest: boolean = false;
 
-	constructor(private commService: CommService){}
+	constructor(private commService: CommService, private defaultDataService:DefaultDataService){}
 	ngOnInit() {
-		this.criterialist = ArrOfCriteria;
+		this.getDefaultCriteria();
 		this.getOneImg();
 	}
+
+  getDefaultCriteria() {
+    this.defaultDataService.arrOfCriteria().then(data => this.criterialist = data);
+  }
 
 	getOneImg() {
 		// This start the Whole process again.

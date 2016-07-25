@@ -1,6 +1,6 @@
 <div>
 	<div class="text-center" *ngIf='!imgToInspect'><h3><i class="glyphicon glyphicon-refresh"></i> Loading from the server...</h3></div>
-	<div *ngIf='imgToInspect'>
+	<div *ngIf='imgToInspect && criterialist'>
 		<div class="jumbotron centered text-center"> <h2>{{imgToInspect.filename}}</h2> </div>
 		<div class="row">
 	  	<a href="{{imgToInspect.url}}" target="_blank">

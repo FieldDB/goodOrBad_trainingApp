@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { NgIf, NgFor, NgClass} from '@angular/common';
 
-import { ArrOfCriteria, BlankGoldenImg } from '../data-fake';
+import { DefaultDataService } from '../data.service';
 import { GoldenRow, CriteriaObject } from '../data-structure';
 import { CommService } from '../commService';
 
@@ -10,24 +10,33 @@ import { CommService } from '../commService';
 	directives: [NgIf, NgFor, NgClass],
 	styleUrls: ['tsapp/golden/golden.css', 'tsapp/common/slider-style.css'],
 	templateUrl: 'tsapp/golden/golden.html',
-	providers: [CommService]
+	providers: [ CommService, DefaultDataService ]
 })
 
 export class Golden implements OnInit{
 	goldenDetails: GoldenRow;
 	criterialist: CriteriaObject[];
 
-	constructor(private commService: CommService) {}
+	constructor(private commService: CommService, 
+		private defaultDataService: DefaultDataService) {}
 	
 	ngOnInit() {
-		this.criterialist = ArrOfCriteria;
+		this.getDefaultCriteria();
 		this.resetBlankImg();
 	}
 
 	resetBlankImg() {
-		console.log("Blank Data Source:", BlankGoldenImg);
-		// let tempData:GoldenRow = BlankGoldenImg;
-		this.goldenDetails = BlankGoldenImg;
+		console.log("Resseting!!" this.goldenDetails);
+	  this.defaultDataService.blankGoldenImg().then(data => {
+	  	const tempstuff:GoldenRow = data;
+	  	this.goldenDetails = tempstuff;
+		console.log("Resseted!!" this.goldenDetails);
+		});
+
+	}
+
+	getDefaultCriteria() {
+	  this.defaultDataService.arrOfCriteria().then(data => this.criterialist = data);
 	}
 
 	fetchOnEnter(event, oid) {
