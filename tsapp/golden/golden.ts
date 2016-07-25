@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { NgIf, NgFor, NgClass} from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { DefaultDataService } from '../data.service';
 import { GoldenRow, CriteriaObject } from '../data-structure';
@@ -16,13 +17,23 @@ import { CommService } from '../commService';
 export class Golden implements OnInit{
 	goldenDetails: GoldenRow;
 	criterialist: CriteriaObject[];
+	private oid: number;
+	private sub: any;
 
 	constructor(private commService: CommService, 
-		private defaultDataService: DefaultDataService) {}
+		private defaultDataService: DefaultDataService
+		private route: ActivatedRoute) {}
 	
 	ngOnInit() {
 		this.getDefaultCriteria();
-		this.resetBlankImg();
+		this.sub = this.route.params.subscribe(params => {
+		     let oid = +params['oid']; // (+) converts string 'oid' to a number
+		     if(oid) {
+		     	this.getPreciceImg(oid);
+		     } else {
+				this.resetBlankImg();
+		     }
+		   });
 	}
 
 	resetBlankImg() {

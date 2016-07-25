@@ -14,6 +14,7 @@ export const routes: RouterConfig = [
   { path: 'pictpage',   component: Pictpage, canActivate: [AuthGuard] },
   { path: 'home', component: Home },
   { path: 'golden', component: Golden },
+  { path: 'golden/:oid', component: Golden },
   { path: '',       component:  Home },
   { path: '**',     component: Home }
 ];
