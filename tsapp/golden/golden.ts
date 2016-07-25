@@ -21,7 +21,7 @@ export class Golden implements OnInit{
 	private sub: any;
 
 	constructor(private commService: CommService, 
-		private defaultDataService: DefaultDataService
+		private defaultDataService: DefaultDataService,
 		private route: ActivatedRoute) {}
 	
 	ngOnInit() {
@@ -72,6 +72,23 @@ export class Golden implements OnInit{
 	onSubmit() {
 		console.log("Submitting the form");
 		this.goldenDetails.criteria_array = JSON.stringify(this.goldenDetails.criteria_array_converted);
+
+		// if there is a OID then update that exact image, otherwise push a new one.
+
+		if(!this.goldenDetails.oid) {
+			// New img so Submit as New.
+		this.commService.postNewGoldenImg(this.goldenDetails)
+						.subscribe(serverAnswer  => {
+  							this.resetBlankImg();
+  							console.log("Success with: ", serverAnswer);
+  	                     },
+  	                     error => {
+  	                     	console.log("ERROR:", error);
+  	                     });
+		} else {
+			// Update old img
+			console.log("Make a route to update the current img.");
+		}
 
 	}
 

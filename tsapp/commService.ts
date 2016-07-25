@@ -23,7 +23,7 @@ export class CommService {
   private resultUrl = this.baseUrl + 'api/result';  // URL to web api
   postDbResult (result: ResultValue): Observable<ResultValue> {
     let body = JSON.stringify(result);
-    let headers = new Headers({ 'Content-Type': 'application/json/' });
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.resultUrl, body, options)
@@ -35,6 +35,16 @@ export class CommService {
   getPreciceGolden(imgOid:number) : Observable<GoldenRow[]> {
     let goldenImg:string = this.baseUrl + 'api/golden/' + imgOid;
     return this.http.get(goldenImg)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  postNewGoldenImg (result: GoldenRow): Observable<GoldenRow> {
+    let body = JSON.stringify(result);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post('http://localhost:8010/api/golden', body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

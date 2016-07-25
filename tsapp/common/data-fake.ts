@@ -1,5 +1,5 @@
 // Returning some fake data to who need it.
-import { CriteriaObject, GoldenRow } from './data-structure';
+import { CriteriaObject, GoldenRow } from '../data-structure';
 
 export const ArrOfCriteria: CriteriaObject[] = [
 	{crit:"Criteria 1 to display", active: true},
