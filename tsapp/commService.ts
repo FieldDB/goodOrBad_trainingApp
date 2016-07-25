@@ -2,33 +2,42 @@ import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { GoldenRow, ResultValue } from './data-structure';
 import { Observable }     from 'rxjs/Observable';
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
 // import 'rxjs/add/operator/';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class CommService {
   constructor (private http: Http) {}
-
-  private randgoldenUrl = 'http://localhost:8010/api/view/randgolden';  // URL to web api
+  private baseUrl:string = 'http://localhost:8010/';
+// Result page
+  private randgoldenUrl = this.baseUrl + 'api/view/randgolden/';  // URL to web api
   getDbImg() : Observable<GoldenRow[]> {
     return this.http.get(this.randgoldenUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
 
-  private resultUrl = 'http://localhost:8010/api/result';  // URL to web api
+  private resultUrl = this.baseUrl + 'api/result';  // URL to web api
   postDbResult (result: ResultValue): Observable<ResultValue> {
     let body = JSON.stringify(result);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Content-Type': 'application/json/' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.resultUrl, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
+  // Golden Sample page
+  // getPreciceGolden(imgOid:number) : Observable<GoldenRow[]> {
+  //   let goldenImg:string = this.baseUrl + 'api/golden/' + imgOid;
+  //   return this.http.get(goldenImg)
+  //                   .map(this.extractData)
+  //                   .catch(this.handleError);
+  // }
 
   private extractData(res: Response) {
     let body = res.json();

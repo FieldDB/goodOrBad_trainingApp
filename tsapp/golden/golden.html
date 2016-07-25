@@ -1,9 +1,21 @@
 <div>
 Option1: Get a Golden image from the system and modify it. Or Delete it (Add Delete flag in Node/postgres for Golden) <br>
-Option2: Create a brand new image. <br>
-Q: Do I need 2 service to Upload new or it create a New one if I forget the oid? <br>
 
-Field Needed:
+To Add, if the OID is in the route load it directly. <br>
+Add a "send" on enter key.
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<div class="input-group">
+			<div disabled="!oid.value" class="input-group-addon">Img #</div>
+		  <input class="form-control" type="number" placeholder="oid# 16445" min=0 #oid (keydown)="fetchOnEnter($event, oid.value)">
+		</div>
+	</div>
+	<div class="col-sm-6 text-center">
+		<button class="btn btn-default" [ngClass]="{'btn-info': goldenDetails.oid}" (click)="resetBlankImg()">Reset to Blank</button>
+	</div>
+</div>
+<br>
 <form (ngSubmit)="onSubmit()" #goldenImg="ngForm">
 	<div class="row">
 		<div class="col-sm-4">
@@ -56,10 +68,9 @@ Field Needed:
 		  </div>
 
 		  <div *ngFor='let criteria of criterialist; let i = index;'>
-		  	{{criteria.crit}}
-		  	<div class="row text-center">
+		  	{{criteria.crit}} <strong *ngIf="!criteria.active" class="bg-danger">- Disabled</strong>
+		  	<div class="row text-center" *ngIf="criteria.active">
 		  		<div class="col-xs-1">
-		  			<strong *ngIf="!criteria.active" class="bg-danger">Disabled</strong>
 		  			<i *ngIf='goldenDetails.criteria_array_converted[i] != null && goldenDetails.criteria_array_converted[i] <=5'
 		  				class="glyphicon glyphicon-fire text-danger"></i></div>
 		  		<div class="col-xs-1">{{goldenDetails.criteria_array_converted[i]}}</div>

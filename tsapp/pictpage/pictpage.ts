@@ -12,7 +12,8 @@ import { CommService } from '../commService';
   directives: [ CORE_DIRECTIVES, NgIf, NgClass ],
   templateUrl: 'tsapp/pictpage/pictpage.html',
   styleUrls: [ 'tsapp/pictpage/pictpage.css', 'tsapp/common/slider-style.css' ],
-  pipes: [ GetOnlyActive ]
+  pipes: [ GetOnlyActive ],
+  providers: [ CommService ]
 })
 
 export class Pictpage implements OnInit {
