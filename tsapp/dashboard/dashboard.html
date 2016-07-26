@@ -19,6 +19,7 @@
 <div *ngIf='isManager'>
 	I need to build: <strong>Manager Analytics:</strong>
 	<ul>
+		<li (click)='section = "goldenImgList"'>List of all Golden Images</li>
 		<li>Success rate on Bad images.</li>
 		<li>Success rate on Good images.</li>
 		<li>Images that is mostly mistaked.</li>
@@ -29,4 +30,7 @@
 		<li>Total system Nbr Error 1, 2, 3, 4... </li>
 		<li>Calender view of all user progress (% succes vs NbrPer day D3?).</li>
 	</ul>
+	<div>
+		<golden-img-list *ngIf='section == "goldenImgList"'></golden-img-list>
+	</div>
 </div>

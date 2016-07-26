@@ -1,0 +1,22 @@
+<div *ngIf="allGoldenImgFromServer">
+	-TODO: possible to filter.
+	Start: {{listStart}}, listEnd: {{listEnd}}, Max: {{tableLength - 1}}
+	<div class="row">
+		<div class="col-xs-1 text-center">Edit</div>
+		<div class="col-xs-1">Pass/Fail</div>
+		<div class="col-xs-2">creation_date</div>
+		<div class="col-xs-4">filename</div>
+		<div class="col-xs-4">type</div>
+	</div>
+	<div class="row" 
+		*ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;let i = index' 
+		(mouseover)="scrollUpOrDownTheList(i)">
+		<div class="col-xs-1 text-center bg-info"><a href="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
+		<div class="col-xs-1">{{imgDetails.passfail}}</div>
+		<div class="col-xs-2">{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</div>
+		<div class="col-xs-4">{{imgDetails.filename}}</div>
+		<div class="col-xs-4">{{imgDetails.type}}</div>
+	</div>
+	<!-- <pre>{{allGoldenImgFromServer | json}}</pre> -->
+</div>
+<div class="text-center" *ngIf="!allGoldenImgFromServer"> Loading data... </div>
