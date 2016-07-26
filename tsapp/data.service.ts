@@ -5,10 +5,12 @@ import { CriteriaObject, GoldenRow } from './data-structure';
 @Injectable()
 export class DefaultDataService {
   arrOfCriteria() {
-    return Promise.resolve(ArrOfCriteria);
+  	let data: CriteriaObject[] = Object.assign([], ArrOfCriteria); // cloned data object
+    return Promise.resolve(data);
   }
 
   blankGoldenImg() {
-  	return Promise.resolve(BlankGoldenImg);
+  	let data = Object.assign({}, BlankGoldenImg); // cloned data object
+  	return Promise.resolve(data);
   }
 }

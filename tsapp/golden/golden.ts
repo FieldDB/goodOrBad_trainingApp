@@ -39,12 +39,15 @@ export class Golden implements OnInit{
 	resetBlankImg() {
 	  	this.defaultDataService.blankGoldenImg().then(data => {
 	  		this.goldenDetails = data;
+	  		this.goldenDetails.criteria_array_converted = []; //It seems that a empty array do not overwrite a array that already exist when receiving blank data.
 		});
 
 	}
 
 	getDefaultCriteria() {
-	  this.defaultDataService.arrOfCriteria().then(data => this.criterialist = data);
+	  this.defaultDataService.arrOfCriteria().then(data => {
+	  	this.criterialist = data
+	  });
 	}
 
 	fetchOnEnter(event, oid) {
