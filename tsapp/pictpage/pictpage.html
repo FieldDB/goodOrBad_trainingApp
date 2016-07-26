@@ -8,11 +8,12 @@
 	  		<img class="col-sm-6 text-center" src="{{imgToInspect.url}}">
 	  	</a>
 	  	<div class="col-sm-6">
-  			<div *ngFor="let criteria of (criterialist | getOnlyActive); let i = index" class="row">
+  			<div *ngFor="let criteria of criterialist; let i = index" class="row">
+  			<!-- If I use a filter (pipe) on the ngFor directly I dont have the same index and I need to Cross reference with the index. (bad design) -->
   				<div class="col-xs-12" [ngClass]='{"col-xs-10": submited }'>
 	  				<div>{{criteria.crit}}</div>
   					<!-- After submition show the user the difference. -->
-	  				<div *ngIf='imgToInspect.criteria_array_converted[i] != undefined && imgToInspect.criteria_array_converted[i] != null'>
+	  				<div *ngIf='imgToInspect.criteria_array_converted[i] != undefined && imgToInspect.criteria_array_converted[i] != null && criteria.active'>
 	  					<input 
 	  						class="criteriaslider" 
 	  						[ngClass]='sliderClass(resultValue.delta_array[i])'
@@ -78,7 +79,6 @@
 	  	<div class="col-sm-6 text-center">
 	  		<button class="btn btn-danger validationbtn" [disabled]='blockSubmit' (click)='submitForm(false)'>Reject</button>
 	  	</div>
-	  	<!-- <pre >Initial: {{imgToInspect | json}}</pre> -->
 	  </div>
 	  <div class="row" *ngIf='submited'>
 	  	<div class="col-xs-12 bg-info" [ngClass]='{"bg-danger": !resultValue.success}'>Explanation: {{imgToInspect.explanation}}</div>

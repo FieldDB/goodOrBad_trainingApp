@@ -3,7 +3,6 @@ import { CORE_DIRECTIVES, NgIf, NgFor, NgClass} from '@angular/common';
 import { Http, Response } from '@angular/http';
 
 import { GoldenRow, ResultValue, CriteriaObject} from '../data-structure';
-import { GetOnlyActive } from './criteria.pipe';
 import { DefaultDataService } from '../data.service';
 import { CommService } from '../commService';
 
@@ -12,7 +11,6 @@ import { CommService } from '../commService';
   directives: [ CORE_DIRECTIVES, NgIf, NgClass ],
   templateUrl: 'tsapp/pictpage/pictpage.html',
   styleUrls: [ 'tsapp/pictpage/pictpage.css', 'tsapp/common/slider-style.css' ],
-  pipes: [ GetOnlyActive ],
   providers: [ CommService, DefaultDataService ]
 })
 
