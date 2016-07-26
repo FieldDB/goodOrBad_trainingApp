@@ -17,7 +17,8 @@ import { CommService } from '../commService';
 export class Golden implements OnInit{
 	goldenDetails: GoldenRow;
 	criterialist: CriteriaObject[];
-	private oid: number;
+	previousOid: number;
+	manualOid: number;
 	private sub: any;
 
 	constructor(private commService: CommService, 
@@ -27,9 +28,9 @@ export class Golden implements OnInit{
 	ngOnInit() {
 		this.getDefaultCriteria();
 		this.sub = this.route.params.subscribe(params => {
-		     let oid = +params['oid']; // (+) converts string 'oid' to a number
-		     if(oid) {
-		     	this.getPreciceImg(oid);
+		     this.manualOid = +params['oid']; // (+) converts string 'oid' to a number
+		     if(this.manualOid) {
+		     	this.getPreciceImg(this.manualOid);
 		     } else {
 				this.resetBlankImg();
 		     }
@@ -40,6 +41,7 @@ export class Golden implements OnInit{
 	  	this.defaultDataService.blankGoldenImg().then(data => {
 	  		this.goldenDetails = data;
 	  		this.goldenDetails.criteria_array_converted = []; //It seems that a empty array do not overwrite a array that already exist when receiving blank data.
+	  		this.manualOid = null;
 		});
 
 	}
@@ -84,13 +86,22 @@ export class Golden implements OnInit{
 						.subscribe(serverAnswer  => {
   							this.resetBlankImg();
   							console.log("Success with: ", serverAnswer);
+  							this.previousOid = 1234;
   	                     },
   	                     error => {
   	                     	console.log("ERROR:", error);
   	                     });
 		} else {
 			// Update old img
-			console.log("Make a route to update the current img.");
+			this.commService.updateGoldenImg(this.goldenDetails, this.goldenDetails.oid)
+						.subscribe(serverAnswer  => {
+  							this.resetBlankImg();
+  							console.log("Success with: ", serverAnswer);
+  							this.previousOid = 1234;
+  	                     },
+  	                     error => {
+  	                     	console.log("ERROR:", error);
+  	                     });
 		}
 
 	}

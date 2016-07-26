@@ -44,7 +44,17 @@ export class CommService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post('http://localhost:8010/api/golden', body, options)
+    return this.http.post(this.baseUrl + 'api/golden', body, options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  updateGoldenImg (result: GoldenRow, oid: number): Observable<GoldenRow> {
+    let body = JSON.stringify(result);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(this.baseUrl + 'api/golden/' + oid, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

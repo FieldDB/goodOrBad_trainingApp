@@ -3,12 +3,13 @@ Option1: Get a Golden image from the system and modify it. Or Delete it (Add Del
 
 To Add, if the OID is in the route load it directly. <br>
 Add a "send" on enter key.
+<div *ngIf='previousOid'>Previous Submitted img is {{previousOid}}</div>
 <div *ngIf='goldenDetails && criterialist'>
 <div class="row">
 	<div class="form-group col-sm-6">
 		<div class="input-group">
 			<div disabled="!oid.value" class="input-group-addon">Img #</div>
-		  <input class="form-control" type="number" placeholder="oid# 16445" min=0 #oid (keydown)="fetchOnEnter($event, oid.value)">
+		  <input [(ngModel)]='manualOid' class="form-control" type="number" placeholder="oid# 16445" min=0 #oid (keydown)="fetchOnEnter($event, oid.value)">
 		</div>
 	</div>
 	<div class="col-sm-6 text-center">
