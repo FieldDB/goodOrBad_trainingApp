@@ -2,16 +2,16 @@
 import { CriteriaObject, GoldenRow } from '../data-structure';
 
 export const ArrOfCriteria: CriteriaObject[] = [
-	{crit:"Criteria 1 to display", active: true},
-	{crit:"Criteria 2 to display", active: true},
-	{crit:"Criteria 3 to display", active: true},
-	{crit:"Criteria 4 to display", active: true},
-	{crit:"Criteria 5 to display", active: false},
-	{crit:"Criteria 6 to display", active: true},
-	{crit:"Long Criteria 7 to display the whole text for the user to see", active: true},
-	{crit:"Another Longer Criteria 8 to display the whole text for the user to see so he can make a decision.", active: true},
-	{crit:"Shorty", active: true},
-	{crit:"Should not have any slider since no critera were set", active: true}
+	{crit:"Does it contain Fur", active: true},
+	{crit:"Cuteness Criteria", active: true},
+	{crit:"Realistic level", active: true},
+	{crit:"How blue is the Background", active: true},
+	{crit:"Old criteria that we dont use anymore, (not active)", active: false},
+	{crit:"How old is the Kitten Years", active: true},
+	{crit:"Is the Kitten Grey?", active: true},
+	{crit:"Would you adopt the kitten?", active: true},
+	{crit:"Is there a Logo in the image?", active: true},
+	{crit:"Do you think the Kitten is planning something Evil?", active: true}
 ];
 
 export const BlankGoldenImg: GoldenRow = {

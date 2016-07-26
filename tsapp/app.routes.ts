@@ -11,10 +11,10 @@ import { AuthGuard } from './common/auth.guard';
 export const routes: RouterConfig = [
   { path: 'login',  component: Login },
   { path: 'dashboard', component: Dashboard },
-  { path: 'pictpage',   component: Pictpage, canActivate: [AuthGuard] },
+  { path: 'pictpage',   component: Pictpage },
   { path: 'home', component: Home },
-  { path: 'golden', component: Golden },
-  { path: 'golden/:oid', component: Golden },
+  { path: 'golden', component: Golden, canActivate: [AuthGuard] },
+  { path: 'golden/:oid', component: Golden, canActivate: [AuthGuard]},
   { path: '',       component:  Home },
   { path: '**',     component: Home }
 ];
