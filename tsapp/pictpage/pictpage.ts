@@ -46,6 +46,7 @@ export class Pictpage implements OnInit {
 		this.resultValue = {
 			"username": JSON.parse(localStorage.getItem("goodOrBadUser")).username,
 			"filenameid": 0,
+      "golden_passfail_state": null,
 			"success": null,
 			"fail_passed": null,
 			"positive_failed": null,
@@ -77,6 +78,7 @@ export class Pictpage implements OnInit {
     					// Also populate the Default Result to send back at the end.
     					this.resultValue.filenameid = this.imgToInspect.oid;  //This should be a OID or something unique.
     					this.resultValue.type = this.imgToInspect.type; //This could be fetch directly in the SQL by joining table, but I dont like joint of big table for 1 value only.
+              this.resultValue.golden_passfail_state = this.imgToInspect.passfail; //So we can know the % of Good and Bad img were inspected.
     			});
   }
 

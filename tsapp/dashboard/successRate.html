@@ -1,0 +1,9 @@
+<div *ngIf="successRateFromServer">
+	<pre>
+		{{successRateFromServer | json}}
+	</pre>
+</div>
+<div *ngIf="resultFailRatio">
+	<pre>{{resultFailRatio | json}}</pre>
+</div>
+<div class="text-center" *ngIf="!successRateFromServer"> Loading... </div>

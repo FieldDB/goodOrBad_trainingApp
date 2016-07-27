@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 // Saller Analytics module
-import {AllGoldenImgList} from './allGoldenImgList.component'
+import { AllGoldenImgList } from './allGoldenImgList.component'
+import { SuccessRate } from './successRate.component'
+
 
 @Component({
 	selector:'dashboard',
 	templateUrl:'tsapp/dashboard/dashboard.html',
-	directives: [ NgIf, AllGoldenImgList ],
+	directives: [ NgIf, AllGoldenImgList, SuccessRate ],
 	styleUrls: ['tsapp/dashboard/dashboard.css']
 })
 
