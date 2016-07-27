@@ -9,12 +9,12 @@ import { App } from './app';
 import { routes } from './app.routes';
 
 bootstrap(
-  App,
-  [
-    provideRouter(routes),
-    FORM_PROVIDERS,
-    HTTP_PROVIDERS,
-    AuthGuard,
-    CommService
-  ]
+    App,
+    [
+        provideRouter(routes),
+        FORM_PROVIDERS,
+        HTTP_PROVIDERS,
+        AuthGuard,
+        CommService
+    ]
 );
