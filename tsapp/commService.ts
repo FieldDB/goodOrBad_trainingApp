@@ -67,8 +67,8 @@ export class CommService {
   }
 
   // Differents API Views Querry
-  // TODO: Refactor of ALL this. 
-  passfailresult(username:string) : Observable<PassFailResult[]> {
+  // TODO: Refactor of ALL this.
+  passfailresult(username?: string) : Observable<PassFailResult[]> {
     let getUrl:string = this.baseUrl + 'api/view/passfailresult/';
     if(username) {getUrl = getUrl + username;}
     return this.http.get(getUrl)
@@ -76,8 +76,8 @@ export class CommService {
                     .catch(this.handleError);
   }
 
-  resFailRatio(username:string) : Observable<ResultFailRatio[]> {
-    let getUrl:string = this.baseUrl + 'api/view/passfailresult/';
+  resFailRatio(username?: string) : Observable<ResultFailRatio[]> {
+    let getUrl:string = this.baseUrl + 'api/view/totimgfailratio/';
     if(username) {getUrl = getUrl + username;}
     return this.http.get(getUrl)
                     .map(this.extractData)

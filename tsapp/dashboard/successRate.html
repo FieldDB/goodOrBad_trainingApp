@@ -1,9 +1,26 @@
 <div *ngIf="successRateFromServer">
-	<pre>
+	<!-- <pre>
 		{{successRateFromServer | json}}
-	</pre>
+	</pre> -->
 </div>
-<div *ngIf="resultFailRatio">
-	<pre>{{resultFailRatio | json}}</pre>
+<div *ngIf="resultFailRatio && ratioPerUser[0]">
+	<!-- <pre>{{resultFailRatio | json}}</pre> -->
+	<div class="row">
+		<div class="col-xs-2">Username</div>
+		<div class="col-xs-1">Sampling</div>
+		<div class="col-xs-3">Global Success rate (good/good+bad) % </div>
+		<div class="col-xs-3">Success on Good img: % </div>
+		<div class="col-xs-3">Success on Bad img: % </div>
+	</div>
+	<div class="row" *ngFor="let user of ratioPerUser">
+		<div class="col-xs-2"> {{user.username}} </div>
+		<div class="col-xs-1"> {{user.successGood + user.successBad + user.failedGood + user.failedBad}} </div>
+		<div class="col-xs-3"> {{((user.successGood + user.successBad) / (user.successGood + user.successBad + user.failedGood + user.failedBad))*100| number:'.0-2'}} </div>
+		<div class="col-xs-3"> {{(user.successGood / (user.successGood + user.failedGood))*100 | number:'.0-2'}} </div>
+		<div class="col-xs-3"> {{(user.successBad / (user.successBad + user.failedBad))*100 | number:'.0-2'}} </div>
+	</div>
+	<div>
+		<!-- <pre>{{ratioPerUser | json}}</pre> -->
+	</div>
 </div>
 <div class="text-center" *ngIf="!successRateFromServer"> Loading... </div>
