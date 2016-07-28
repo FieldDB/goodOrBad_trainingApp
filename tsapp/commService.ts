@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { GoldenRow, ResultValue,  PassFailResult, ResultFailRatio } from './data-structure';
+import { GoldenRow, ResultValue,  PassFailResult, RatioPerUser } from './data-structure';
 import { Observable } from 'rxjs/Observable';
 // import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
@@ -69,15 +69,7 @@ export class CommService {
 
     // Differents API Views Querry
     // TODO: Refactor of ALL this.
-    passfailresult(username?: string): Observable<PassFailResult[]> {
-        let getUrl: string = this.baseUrl + 'api/view/passfailresult/';
-        if (username) { getUrl = getUrl + username; }
-        return this.http.get(getUrl)
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
-
-    resFailRatio(username?: string): Observable<ResultFailRatio[]> {
+    resFailRatio(username?: string): Observable<RatioPerUser[]> {
         let getUrl: string = this.baseUrl + 'api/view/totimgfailratio/';
         if (username) { getUrl = getUrl + username; }
         return this.http.get(getUrl)

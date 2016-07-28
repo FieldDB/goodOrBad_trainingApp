@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PassFailResult, ResultFailRatio, RatioPerUser } from '../data-structure';
+import { RatioPerUser, RatioPerUserPc } from '../data-structure';
 import { CommService } from '../commService';
 
 @Component({
@@ -9,35 +9,20 @@ import { CommService } from '../commService';
 })
 
 export class SuccessRate implements OnInit {
-    successRateFromServer: PassFailResult[];
-    resultFailRatio: ResultFailRatio[];
-    ratioPerUser: RatioPerUser[] = [];
+    ratioPerUser: RatioPerUser[];
+    ratioPerUserPc: RatioPerUserPc[];
 
     constructor(private commService: CommService) { }
     ngOnInit() {
-        this.getServerPF();
         this.getServerRatio();
-    }
-
-    private getServerPF() {
-        this.commService.passfailresult()
-            .subscribe((arrayOfData: PassFailResult[]) => {
-                if (arrayOfData[0]) {
-                    this.successRateFromServer = arrayOfData;
-                }
-            },
-            error => {
-                console.log('ERROR:', error);
-                // Warn the user and display the Oid red?
-            });
     }
 
     private getServerRatio() {
         this.commService.resFailRatio()
-            .subscribe((arrayOfData: ResultFailRatio[]) => {
+            .subscribe((arrayOfData: RatioPerUser[]) => {
                 if (arrayOfData[0]) {
-                    this.resultFailRatio = arrayOfData;
-                    this.returnFailRatioPerUser(arrayOfData);
+                    this.ratioPerUser = arrayOfData;
+                    this.ratioPerUserPc = this.returnCalculatedArray(arrayOfData);
                 }
             },
             error => {
@@ -46,44 +31,28 @@ export class SuccessRate implements OnInit {
             });
     }
 
-    private returnFailRatioPerUser(arrayOfData: ResultFailRatio[]) {
-        // Note: This is A stupid way of doing it because for unknown reason Reduce did not work, and typescript dosent allow me to iterate on Object and many more annoying reason.
-        // if I knew how to do it in SQL I would instead since Typescript is annoying me at the moment.
+    private returnCalculatedArray(arrOfData: RatioPerUser[]) {
+        return arrOfData.map(user => {
+            let successGood: number = parseInt(user.successgood, 10);
+            let successBad: number = parseInt(user.successbad, 10);
+            let failedGood: number = parseInt(user.failedgood, 10);
+            let failedBad: number = parseInt(user.failedbad, 10);
+            let total: number = parseInt(user.total, 10);
 
-        // TODO: When this work push this in a external service
-        let listOfUserReceived: { [username: string]: number } = {};
-        for (let i = 0; i < arrayOfData.length; i++) {
-            let index: number = Object.keys(listOfUserReceived).length; // Number of user I iterated on so far.
-            let curr: ResultFailRatio = arrayOfData[i];
-            let currentUser: string = curr.username;
+            let tempObject: RatioPerUserPc = {
+                username: user.username,
+                globSuccessRate: Math.round(((successGood + successBad) / total) * 10000) / 100,
+                succOnGoodImg: Math.round((successGood / (successGood + failedGood)) * 10000) / 100,
+                succOnBadImg: Math.round((successBad / (successBad + failedBad)) * 10000) / 100,
+                total: parseInt(user.total, 10)
+            }
+            return tempObject;
+        })
+    }
 
-            if (listOfUserReceived[currentUser] === undefined) {
-                this.ratioPerUser.push({
-                    username: currentUser,
-                    successGood: 0,
-                    successBad: 0,
-                    failedGood: 0,
-                    failedBad: 0,
-                });
-                index = this.ratioPerUser.length - 1; // Keep the reference to the last item pushed.
-                listOfUserReceived[currentUser] = index;  // keep a reference for later when I want to add more.
-            } else {
-                index = listOfUserReceived[currentUser];
-            }
-            if (curr.success === true && curr.golden_passfail_state === true) {
-                // Success and it was on a Good image (easier case)
-                this.ratioPerUser[index].successGood += parseInt(curr.ct, 10);
-            } else if (curr.success === true && curr.golden_passfail_state === false) {
-                // Success at rejecting a Bad image (Good job Mate!)
-                this.ratioPerUser[index].successBad += parseInt(curr.ct, 10);
-            } else if (curr.success === false && curr.golden_passfail_state === true) {
-                // He rejected a Good image, Lower your criteria next time... But better to fail good than to accept bad one.
-                this.ratioPerUser[index].failedGood += parseInt(curr.ct, 10);
-            } else if (curr.success === false && curr.golden_passfail_state === false) {
-                // He let a Bad image pass. Better tight those criteria for next time. We dont want to accept anything :/.
-                this.ratioPerUser[index].failedBad += parseInt(curr.ct, 10);
-            }
-        }
+    sumStr(str1: string, str2: string) {
+      // This is junk, I should change all the type when I receive the data from the API directly via a interface.
+      return parseInt(str1, 10) + parseInt(str2, 10);
     }
 
 }

@@ -56,12 +56,18 @@ export class ResultFailRatio {
 
 export class RatioPerUser {
     username: string;
-    successGood: number;
-    successBad: number;
-    failedGood: number;
-    failedBad: number;
+    successgood: string; // this is a string since it come from the API as JSON but should eb a number
+    successbad: string;
+    failedgood: string;
+    failedbad: string;
+    total: string;
 }
 
-export class ListOfUser {
-    [n: string]: RatioPerUser;
+export class RatioPerUserPc {
+    // Percentage result for each user.
+    username: string;
+    globSuccessRate: number;
+    succOnGoodImg: number;
+    succOnBadImg: number;
+    total: number;
 }
