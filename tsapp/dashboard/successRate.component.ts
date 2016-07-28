@@ -9,7 +9,7 @@ import { CommService } from '../commService';
 })
 
 export class SuccessRate implements OnInit {
-    ratioPerUser: RatioPerUserStr[];
+    ratioPerUser: RatioPerUser[];
     ratioPerUserPc: RatioPerUserPc[];
 
     constructor(private commService: CommService) { }

@@ -1,35 +1,44 @@
 <div *ngIf="ratioPerUser">
-	<div class="row">
-		<div class="col-xs-2">Username</div>
-		<div class="col-xs-1">Sampling</div>
-		<div class="col-xs-3">Global Success rate (good/total) % </div>
-		<div class="col-xs-3">Success on Good img: % </div>
-		<div class="col-xs-3">Success on Bad img: % </div>
-	</div>
-	<div class="row" *ngFor="let user of ratioPerUserPc">
-		<div class="col-xs-2"> {{user.username}} </div>
-		<div class="col-xs-1"> {{user.total}} </div>
-		<div class="col-xs-3"> {{user.globSuccessRate}} </div>
-		<div class="col-xs-3"> {{user.succOnGoodImg}} </div>
-		<div class="col-xs-3"> {{user.succOnBadImg}} </div>
-	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+					<th>Username</th>
+					<th>Sampling</th>
+					<th>Global Success rate (good/total) % </th>
+					<th>Success on Good img: % </th>
+					<th>Success on Bad img: % </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of ratioPerUserPc">
+				<td> {{user.username}} </td>
+				<td> {{user.total}} </td>
+				<td> {{user.globSuccessRate}} </td>
+				<td> {{user.succOnGoodImg}} </td>
+				<td> {{user.succOnBadImg}} </td>
+			</tr>
+		</tbody>
+	</table>
+
 	<br>
 	<hr>
-	<div class="row">
-		<div class="col-xs-3"> Username </div>
-		<div class="col-xs-3"> Sampling </div>
-		<div class="col-xs-3"> Good Img </div>
-		<div class="col-xs-3"> Bad Img </div>
-	</div>
-	<div class="row" *ngFor="let user of ratioPerUser">
-		<div class="col-xs-3"> {{user.username}} </div>
-		<div class="col-xs-3"> {{user.total}} </div>
-		<div class="col-xs-3"> {{user.successgood + user.failedgood}}</div>
-		<div class="col-xs-3"> {{user.successbad + user.failedbad}} </div>
-	</div>
-	<!-- <div>
-		<pre>{{ratioPerUser | json}}</pre>
-		<pre> {{ratioPerUserPc | json}} </pre>
-	</div> -->
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th> Username </th>
+				<th> Sampling </th>
+				<th> Good Img </th>
+				<th> Bad Img </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let user of ratioPerUser">
+				<td> {{user.username}} </td>
+				<td> {{user.total}} </td>
+				<td> {{user.successgood + user.failedgood}}</td>
+				<td> {{user.successbad + user.failedbad}} </td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div class="text-center" *ngIf="!ratioPerUser"> Loading... </div>
