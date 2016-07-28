@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { RatioPerUser, RatioPerUserPc } from '../data-structure';
+import { RatioPerUser, RatioPerUserStr, RatioPerUserPc } from '../data-structure';
 import { CommService } from '../commService';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommService } from '../commService';
 })
 
 export class SuccessRate implements OnInit {
-    ratioPerUser: RatioPerUser[];
+    ratioPerUser: RatioPerUserStr[];
     ratioPerUserPc: RatioPerUserPc[];
 
     constructor(private commService: CommService) { }
@@ -19,10 +19,10 @@ export class SuccessRate implements OnInit {
 
     private getServerRatio() {
         this.commService.resFailRatio()
-            .subscribe((arrayOfData: RatioPerUser[]) => {
+            .subscribe((arrayOfData: RatioPerUserStr[]) => {
                 if (arrayOfData[0]) {
-                    this.ratioPerUser = arrayOfData;
-                    this.ratioPerUserPc = this.returnCalculatedArray(arrayOfData);
+                    this.ratioPerUser = this.transformToGoodType(arrayOfData);
+                    this.ratioPerUserPc = this.returnCalculatedArray(this.ratioPerUser);
                 }
             },
             error => {
@@ -33,26 +33,28 @@ export class SuccessRate implements OnInit {
 
     private returnCalculatedArray(arrOfData: RatioPerUser[]) {
         return arrOfData.map(user => {
-            let successGood: number = parseInt(user.successgood, 10);
-            let successBad: number = parseInt(user.successbad, 10);
-            let failedGood: number = parseInt(user.failedgood, 10);
-            let failedBad: number = parseInt(user.failedbad, 10);
-            let total: number = parseInt(user.total, 10);
-
-            let tempObject: RatioPerUserPc = {
+            return {
                 username: user.username,
-                globSuccessRate: Math.round(((successGood + successBad) / total) * 10000) / 100,
-                succOnGoodImg: Math.round((successGood / (successGood + failedGood)) * 10000) / 100,
-                succOnBadImg: Math.round((successBad / (successBad + failedBad)) * 10000) / 100,
-                total: parseInt(user.total, 10)
-            }
-            return tempObject;
-        })
+                globSuccessRate: Math.round(((user.successgood + user.successbad) / user.total) * 10000) / 100,
+                succOnGoodImg: Math.round((user.successgood / (user.successgood + user.failedgood)) * 10000) / 100,
+                succOnBadImg: Math.round((user.successbad / (user.successbad + user.failedbad)) * 10000) / 100,
+                total: user.total
+            };
+
+        });
     }
 
-    sumStr(str1: string, str2: string) {
-      // This is junk, I should change all the type when I receive the data from the API directly via a interface.
-      return parseInt(str1, 10) + parseInt(str2, 10);
+    private transformToGoodType (arrToCheck) {
+      return arrToCheck.map(user => {
+        return {
+            username: user.username,
+            successgood: parseInt(user.successgood, 10),
+            successbad: parseInt(user.successbad, 10),
+            failedgood: parseInt(user.failedgood, 10),
+            failedbad: parseInt(user.failedbad, 10),
+            total: parseInt(user.total, 10)
+        };
+      });
     }
 
 }

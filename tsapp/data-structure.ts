@@ -54,13 +54,22 @@ export class ResultFailRatio {
     ct: number;
 }
 
-export class RatioPerUser {
+export class RatioPerUserStr {
     username: string;
     successgood: string; // this is a string since it come from the API as JSON but should eb a number
     successbad: string;
     failedgood: string;
     failedbad: string;
     total: string;
+}
+
+export class RatioPerUser {
+    username: string;
+    successgood: number;
+    successbad: number;
+    failedgood: number;
+    failedbad: number;
+    total: number;
 }
 
 export class RatioPerUserPc {
