@@ -7,7 +7,8 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\""
   },
   "license": "ISC",
   "dependencies": {
@@ -31,6 +32,11 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-htmlfile-reporter": "^0.3.4",
+    "karma-jasmine": "^1.0.2",
     "lite-server": "^2.2.0",
     "tslint": "^3.13.0",
     "typescript": "^1.8.10",

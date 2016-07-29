@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    
+
     <!-- 1. Load libraries -->
     <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.css">
     <script type="text/javascript" src="/node_modules/jwt-decode/build/jwt-decode.js"></script>
@@ -15,10 +15,10 @@
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <!-- 2. Configure SystemJS -->
-    
+
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+      System.import('tsapp').catch(function(err){ console.error(err); });
     </script>
   </head>
   <!-- 3. Display the application -->
