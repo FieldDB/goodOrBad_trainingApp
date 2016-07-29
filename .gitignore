@@ -6,5 +6,6 @@ tsapp/**/*.js.map
 tsapp/**/*.js
 e2e/**/*.js.map
 e2e/**/*.js
+_test*
 *.log
 *.DS_Store

@@ -25,51 +25,27 @@ this.addMatchers({});
 */
 
 /* tslint:disable:no-unused-variable */
-import { App } from './app';
+import { GoldenRow } from './data-structure';
 
 import { async, inject } from '@angular/core/testing';
 
 import { TestComponentBuilder } from '@angular/core/testing';
 
 import { By }             from '@angular/platform-browser';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Navbar } from './navbar/navbar';
-// import { ViewMetadata }   from '@angular/core';
-// import { PromiseWrapper } from '@angular/core/src/facade/promise';
-
 ////////  SPECS  /////////////
 
 /// Delete this
-describe('Smoke test', () => {
-  console.log('Here is my SMORE test');
+describe('Smoke Data test', () => {
+  console.log('Here is my Data test');
   it('should run a passing test', () => {
     expect(true).toEqual(true, 'should pass');
   });
 });
 
-describe('App with TCB', function () {
+describe('Have the data structure', function () {
 
-  it('should instantiate component',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-    tcb.createAsync(App).then(fixture => {
-      expect(fixture.componentInstance instanceof App).toBe(true);
-    });
-  })));
-
-  it('should have expected <h1> text',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-      tcb.createAsync(App).then(fixture => {
-      // fixture.detectChanges();  // would need to resolve a binding but we don't have a binding
-
-      let h1 = fixture.debugElement.query(el => el.name === 'h1').nativeElement;  // it works
-
-          h1 = fixture.debugElement.query(By.css('h1')).nativeElement;            // preferred
-
-      // expect(h1.innerText).toNotMatch(/angular 2 app/i, '<h1> should say something about "Angular 2 App"');
-      expect(true).toBeTruthy();
-    });
-
-  })));
+  it('should instantiate GoldenRow', () => {
+    console.log(GoldenRow);
+    expect(GoldenRow).toBeDefined();
+  });
 });
