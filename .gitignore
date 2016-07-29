@@ -4,5 +4,7 @@ typings/
 # Ignore compiled & Map File
 tsapp/**/*.js.map
 tsapp/**/*.js
+e2e/**/*.js.map
+e2e/**/*.js
 *.log
 *.DS_Store
