@@ -25,58 +25,48 @@ this.addMatchers({});
 */
 
 /* tslint:disable:no-unused-variable */
-import { App } from './app';
+import { Navbar } from './navbar';
 
-import { describe, expect, it, TestComponentBuilder } from '@angular/core/testing';
 import { async, inject } from '@angular/core/testing';
 
+import { TestComponentBuilder } from '@angular/core/testing';
+
 import { By }             from '@angular/platform-browser';
-
-// Dependancy of App.
-import { provide } from '@angular/core';
-import { Component } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Navbar } from './navbar/navbar';
-
+import { provide }        from '@angular/core';
 import { ViewMetadata }   from '@angular/core';
 import { PromiseWrapper } from '@angular/core/src/facade/promise';
 
-
-
 ////////  SPECS  /////////////
 
-/// Delete this
-describe('Smoke test', () => {
-  console.log('Here is my SMORE test');
+describe('Testing the navbar', () => {
+  console.log('Faking Navbar init it.');
   it('should run a passing test', () => {
     expect(true).toEqual(true, 'should pass');
   });
 });
 
-// xdescribe('App with TCB', function () {
-//
-//   it('should instantiate component',
-//     async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-//       return tcb.overrideProviders(App, [ provide(Router, {useValue: Router})) ])
-//         .createAsync(App)
-//         .then((fixture) => {
-//           expect(true).toBe(true, 'should create AppComponent');
-//         });
-//   });));
-//
-//   // it('should have expected <h1> text',
-//   //   async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-//   //
-//   //     tcb.createAsync(App).then(fixture => {
-//   //     // fixture.detectChanges();  // would need to resolve a binding but we don't have a binding
-//   //
-//   //     let h1 = fixture.debugElement.query(el => el.name === 'h1').nativeElement;  // it works
-//   //
-//   //         h1 = fixture.debugElement.query(By.css('h1')).nativeElement;            // preferred
-//   //
-//   //     // expect(h1.innerText).toNotMatch(/angular 2 app/i, '<h1> should say something about "Angular 2 App"');
-//   //     expect(true).toBeTruthy();
-//   //   });
-//
-//   // })));
-// });
+
+describe('Navbar Component', function () {
+
+  it('should instantiate component',
+    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+
+    tcb.createAsync(Navbar).then(fixture => {
+      expect(fixture.componentInstance instanceof Navbar).toBe(true, 'should create Navbar');
+    });
+  })));
+
+  it('should have a Navbar element',
+    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      tcb.createAsync(Navbar).then(fixture => {
+      // fixture.detectChanges();  // would need to resolve a binding but we don't have a binding
+      // let nav = fixture.debugElement.query(el => el.name === 'a').nativeElement;  // it works
+      let nav = fixture.debugElement.query(By.css('a[href="pictpage"]')).nativeElement;            // preferred
+      // let nav = fixture.debugElement.query(By.css('li[1]')).nativeElement;            // preferred
+      console.log('FUCKIGN ELEMENT:', nav);
+      expect(nav.innerText).toMatch('Trainning');
+    });
+
+  })));
+
+});
