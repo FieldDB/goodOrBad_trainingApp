@@ -23,38 +23,33 @@ Custom matchers help to document the intent of your specs, and can help to remov
 beforeEach(function() {
 this.addMatchers({});
 */
-
 /* tslint:disable:no-unused-variable */
-import { Navbar } from './navbar';
+import { Login } from './login';
+import { Component } from '@angular/core';
 
-import { async, inject, TestComponentBuilder } from '@angular/core/testing';
+import { async, inject, TestComponentBuilder, provide } from '@angular/core/testing';
 import { By }             from '@angular/platform-browser';
 
 ////////  SPECS  /////////////
+// export class MocklocalStorage {
+//   getItem() {
+//     return {
+//         email: 'thisWillWork@gmail.com',
+//         username: 'awesomePerson',
+//         name: 'aGoodUser',
+//         role: 'manager'
+//     };
+//   }
+// }
 
-describe('Navbar Component', function () {
+describe('Login Component', function () {
 
-  it('should instantiate component',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-
-    tcb.createAsync(Navbar).then(fixture => {
-      expect(fixture.componentInstance instanceof Navbar).toBe(true, 'should create Navbar');
-    });
-  })));
-
-  it('should have a Navbar element',
-    async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-      tcb.createAsync(Navbar).then(fixture => {
-      let home = fixture.debugElement.query(By.css('a[href="home"]')).nativeElement;
-      let pictPage = fixture.debugElement.query(By.css('a[href="pictpage"]')).nativeElement;
-      let dashboard = fixture.debugElement.query(By.css('a[href="dashboard"]')).nativeElement;
-      let golden = fixture.debugElement.query(By.css('a[href="golden"]')).nativeElement;
-      expect(home).toBeDefined();
-      expect(pictPage.innerText).toMatch('Trainning');
-      expect(dashboard.innerText).toMatch('Dashboard');
-      expect(golden.innerText).toMatch('Golden Image');
-    });
-
-  })));
+  it('should instantiate the Login component', () => {
+    expect(Login).toBeDefined();
+    // I tried for Many hours and at the moment I cannot make the Provider work.
+    // I can construct a function but as soon as it need a external module everything break.
+    // It seems that I dont understand "provite" or that it dosent work yet.
+    // I will come back to the Injection in time when Angular will be more stable.
+  });
 
 });

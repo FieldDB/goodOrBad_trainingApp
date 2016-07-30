@@ -25,7 +25,7 @@ this.addMatchers({});
 */
 
 /* tslint:disable:no-unused-variable */
-import { GoldenRow } from './data-structure';
+import { GoldenRow, ResultValue, CriteriaObject, PassFailResult, ResultFailRatio, RatioPerUserStr, RatioPerUser, RatioPerUserPc } from './data-structure';
 
 import { async, inject } from '@angular/core/testing';
 
@@ -44,8 +44,15 @@ describe('Smoke Data test', () => {
 
 describe('Have the data structure', function () {
 
-  it('should instantiate GoldenRow', () => {
+  it('should check that all class are defined and exportable', () => {
     console.log(GoldenRow);
     expect(GoldenRow).toBeDefined();
+    expect(ResultValue).toBeDefined();
+    expect(CriteriaObject).toBeDefined();
+    expect(PassFailResult).toBeDefined();
+    expect(ResultFailRatio).toBeDefined();
+    expect(RatioPerUserStr).toBeDefined();
+    expect(RatioPerUser).toBeDefined();
+    expect(RatioPerUserPc).toBeDefined();
   });
 });
