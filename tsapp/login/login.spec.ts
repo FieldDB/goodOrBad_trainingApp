@@ -27,7 +27,7 @@ this.addMatchers({});
 import { Login } from './login';
 import { Component } from '@angular/core';
 
-import { async, inject, TestComponentBuilder, provide } from '@angular/core/testing';
+import { async, inject, TestComponentBuilder } from '@angular/core/testing';
 import { By }             from '@angular/platform-browser';
 
 ////////  SPECS  /////////////
