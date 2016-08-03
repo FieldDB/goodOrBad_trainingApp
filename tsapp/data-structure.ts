@@ -85,4 +85,5 @@ export class UserDetails {
   email: string;
   username: string;
   name: string;
+  role: string;
 }
