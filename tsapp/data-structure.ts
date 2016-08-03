@@ -80,3 +80,9 @@ export class RatioPerUserPc {
     succOnBadImg: number;
     total: number;
 }
+
+export class UserDetails {
+  email: string;
+  username: string;
+  name: string;
+}

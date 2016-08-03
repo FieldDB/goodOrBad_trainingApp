@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 @Component({
     selector: 'home',
-    templateUrl: 'tsapp/home/home.html'
+    templateUrl: 'tsapp/home/home.html',
+    directives: [ ROUTER_DIRECTIVES ]
 })
 
 export class Home {
