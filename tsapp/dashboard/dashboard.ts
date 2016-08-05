@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 // Saller Analytics module
-import { AllGoldenImgList } from './allGoldenImgList.component'
-import { SuccessRate } from './successRate.component'
+import { AllGoldenImgList } from './allGoldenImgList.component';
+import { SuccessRate } from './successRate.component';
 
 
 @Component({
     selector: 'dashboard',
     templateUrl: 'tsapp/dashboard/dashboard.html',
-    directives: [NgIf, NgFor, AllGoldenImgList, SuccessRate],
-    styleUrls: ['tsapp/dashboard/dashboard.css']
+    directives: [NgIf, NgFor, AllGoldenImgList, SuccessRate, ROUTER_DIRECTIVES],
+    styleUrls: ['tsapp/dashboard/dashboard.css'],
 })
 
 // Q: Since we will load analytics from the server, we could in theory make all the call at once and let the promesses come in the order they feel like.

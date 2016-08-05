@@ -8,16 +8,17 @@ import { Home } from './home/home';
 import { Pictpage } from './pictpage/pictpage';
 import { Dashboard } from './dashboard/dashboard';
 import { UserDetails } from './data-structure';
+import { Golden } from './golden/golden';
 
 @Component({
   selector: 'my-app',
   templateUrl: 'tsapp/app.html',
   directives: [ ROUTER_DIRECTIVES, Navbar],
   providers: [ UserService ],
-  precompile: [ Home, Dashboard, Pictpage ]
+  precompile: [ Home, Dashboard, Pictpage, Golden ]
 })
 
-export class App implements OnInit{
+export class App implements OnInit {
   constructor(public router: Router, private userService: UserService) {}
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class App implements OnInit{
       this.userService.getUserDetails()
           .subscribe((userInfo: UserDetails) => {
               if (userInfo) {
-                console.log("Array Of 1 is:", userInfo);
+                console.log('Array Of 1 is:', userInfo);
                   localStorage.setItem('goodOrBadUser', JSON.stringify(userInfo));
               }
           },

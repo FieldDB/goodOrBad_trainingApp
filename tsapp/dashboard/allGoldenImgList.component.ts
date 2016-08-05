@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { GoldenRow } from '../data-structure';
 import { CommService } from '../commService';
@@ -6,7 +7,8 @@ import { CommService } from '../commService';
 @Component({
     selector: 'golden-img-list',
     templateUrl: 'tsapp/dashboard/allGoldenImg.html',
-    styleUrls: ['tsapp/dashboard/dashboard.css']
+    styleUrls: ['tsapp/dashboard/dashboard.css'],
+    directives: [ ROUTER_DIRECTIVES ]
 })
 
 export class AllGoldenImgList implements OnInit {

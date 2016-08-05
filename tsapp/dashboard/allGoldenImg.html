@@ -14,7 +14,7 @@
 		<tbody>
 			<tr *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;let i = index'
 			(mouseover)="scrollUpOrDownTheList(i)">
-				<td class="text-center bg-info"><a href="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></td>
+				<td class="text-center bg-info"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></td>
 				<td>{{imgDetails.passfail}}</td>
 				<td>{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</td>
 				<td>{{imgDetails.filename}}</td>

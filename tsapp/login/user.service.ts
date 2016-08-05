@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: Http) {
   }
   // Result page
-  getUserDetails(): Observable<UserDetails[]> {
+  getUserDetails(): Observable<UserDetails> {
       let randgoldenUrl = this.baseUrl + 'api/whoislogin/';  // URL to web api
       return this.http.get(randgoldenUrl)
           .map(this.extractData)
