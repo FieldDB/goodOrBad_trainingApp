@@ -9,6 +9,7 @@ export class GoldenRow {
     explanation: string;
     type: string;
     info_url: string;
+    info_url_arr: string[];
     oid: number;
 }
 

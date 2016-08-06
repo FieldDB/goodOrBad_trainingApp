@@ -73,6 +73,9 @@ export class Pictpage implements OnInit {
                         } else { return 1; }
                     });
                 }
+                if (this.imgToInspect.info_url) {
+                    this.imgToInspect.info_url_arr = JSON.parse(this.imgToInspect.info_url);
+                }
                 // Also populate the Default Result to send back at the end.
                 this.resultValue.filenameid = this.imgToInspect.oid;  // This should be a OID or something unique.
                 this.resultValue.type = this.imgToInspect.type; // This could be fetch directly in the SQL by joining table, but I dont like joint of big table for 1 value only.

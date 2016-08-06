@@ -64,6 +64,7 @@ export class Golden implements OnInit {
                 if (arrayOf1[0]) {
                     this.goldenDetails = arrayOf1[0];
                     this.goldenDetails.criteria_array_converted = JSON.parse(this.goldenDetails.criteria_array);
+                    this.goldenDetails.info_url_arr = JSON.parse(this.goldenDetails.info_url) || [];
                 } else {
                     this.resetBlankImg();
                 }
@@ -75,9 +76,10 @@ export class Golden implements OnInit {
     }
 
     onSubmit() {
-        console.log('Submitting the form');
         this.goldenDetails.criteria_array = JSON.stringify(this.goldenDetails.criteria_array_converted);
+        this.goldenDetails.info_url = JSON.stringify(this.goldenDetails.info_url_arr);
 
+        console.log('Submitting the form', this.goldenDetails);
         // if there is a OID then update that exact image, otherwise push a new one.
 
         if (!this.goldenDetails.oid) {
@@ -104,6 +106,18 @@ export class Golden implements OnInit {
                 });
         }
 
+    }
+
+    addToInfoUrl(newUrl: string) {
+        if (newUrl) {
+            this.goldenDetails.info_url_arr.push(newUrl);
+        }
+    }
+
+    removeThisItem(arrayOfUrl: string[], index: number) {
+        if (arrayOfUrl && index !== undefined) {
+            arrayOfUrl.splice(index, 1);
+        }
     }
 
     setRandomKittenUrl() {

@@ -93,11 +93,17 @@ Add a "send" on enter key.
 		  </div>
 		  <br>
 
+			<div *ngFor="let url of goldenDetails.info_url_arr;let urlIndex = index">
+				<div> URL:
+					<a href="{{url}}" target="_blank">{{url}}</a> <i (click)="removeThisItem(goldenDetails.info_url_arr, urlIndex)" class="glyphicon glyphicon-remove"></i>
+				</div>
+			</div>
 		  <div class="form-group">
 		    <div class="input-group">
 		      <div class="input-group-addon form-description-label">Extra Info Url</div>
-		      <input type="url" class="form-control"
-		      [(ngModel)]="goldenDetails.info_url">
+		      <input type="url" class="form-control" #newurl
+		      [(ngModel)]="tempHolder">
+					<div type="buttons" class="form-control" name="button" (click)="addToInfoUrl(tempHolder);tempHolder=''">Add</div>
 		    </div>
 		  </div>
 

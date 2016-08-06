@@ -14,10 +14,10 @@
 	  				<div>{{criteria.crit}}</div>
   					<!-- After submition show the user the difference. -->
 	  				<div *ngIf='imgToInspect.criteria_array_converted[i] != undefined && imgToInspect.criteria_array_converted[i] != null && criteria.active'>
-	  					<input 
-	  						class="criteriaslider" 
+	  					<input
+	  						class="criteriaslider"
 	  						[ngClass]='sliderClass(resultValue.delta_array[i])'
-	  						*ngIf=sliderStyle 
+	  						*ngIf=sliderStyle
 	  						min=0,
 	  						max=10
 	  						steps=1
@@ -33,7 +33,7 @@
 		  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 0);btnGroup.value = 0'>
 		  					  	Bad
 		  					  </button>
-		  					  <button #btnGood class="btn btn-lg btn-default" 
+		  					  <button #btnGood class="btn btn-lg btn-default"
 		  					  	[disabled]="submited"
 		  					  	[ngClass]='btnClass(btnGroup.value, 1, resultValue.delta_array[i])'
 		  					  	(click)='setCriteriaX(i, imgToInspect.criteria_array_converted[i], 1);btnGroup.value = 1'>
@@ -60,14 +60,17 @@
 	  	</div>
 		</div>
 	  <div class="row"> <div class="col-xs-12 bg-info">{{imgToInspect.description}}</div> </div>
-	  <div class="row" *ngIf="imgToInspect.info_url">
-	  	<div class="col-xs-12 bg-info"><a href="{{imgToInspect.info_url}}" target="_blank">See extra details / link</a> URL: {{imgToInspect.info_url}}</div>
-	  </div>
+		<div class="row" *ngIf="imgToInspect.info_url_arr">
+			<div class="col-xs-2">Extra details:</div>
+			<div class="col-xs-10">
+				<div *ngFor='let url of imgToInspect.info_url_arr'> <a href="{{url}}" target="_blank">{{url}}</a> </div>
+		 </div>
+		</div>
 	  <div class="row">
 	  	<div class="col-xs-12">
-	  		<textarea placeholder="Add comments.." 
-	  			class="full_comment_box" 
-	  			[disabled]='submited' 
+	  		<textarea placeholder="Add comments.."
+	  			class="full_comment_box"
+	  			[disabled]='submited'
 	  			[(ngModel)]="resultValue.user_comments">
 	  		</textarea>
 	  	</div>
