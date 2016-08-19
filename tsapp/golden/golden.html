@@ -47,7 +47,7 @@ Add a "send" on enter key.
 		      [(ngModel)]="goldenDetails.filename">
 		    </div>
 		  </div>
-		  
+
 
 		  <div class="form-group">
 		    <div class="input-group">
@@ -69,26 +69,25 @@ Add a "send" on enter key.
 		  </div>
 
 		  <div *ngFor='let criteria of criterialist; let i = index;'>
-		  	{{criteria.crit}} <strong *ngIf="!criteria.active" class="bg-danger">- Disabled</strong>
-		  	<div class="row text-center" *ngIf="goldenDetails.criteria_array_converted && criteria.active">
+		  	{{criteria.name}} <strong *ngIf="criteria.deleted == true" class="bg-danger">- Disabled</strong>
+		  	<div class="row text-center" *ngIf="goldenDetails.criteria_array_converted && criteria.deleted != true">
 		  		<div class="col-xs-1">
 		  			<i *ngIf='goldenDetails.criteria_array_converted[i] != null && goldenDetails.criteria_array_converted[i] <=5'
 		  				class="glyphicon glyphicon-fire text-danger"></i></div>
 		  		<div class="col-xs-1">{{goldenDetails.criteria_array_converted[i]}}</div>
 			  	<div class="col-xs-8">
-			  	<input 
+			  	<input
 			  		class="criteriaslider"
-			  		[ngClass]="{'default_null_value':!criteria.active || goldenDetails.criteria_array_converted[i] == null}"
+			  		[ngClass]="{'default_null_value': goldenDetails.criteria_array_converted[i] == null}"
 			  		min=0,
 			  		max=10
 			  		steps=1
 			  		type="range"
-			  		[disabled]="!criteria.active"
 			  		[(ngModel)]="goldenDetails.criteria_array_converted[i]">
 			  	</div>
 		  		<div class="col-xs-1"><i *ngIf='goldenDetails.criteria_array_converted[i] >5'class="glyphicon glyphicon-ok text-success"></i></div>
 		  		<div class="col-xs-1" (click)='goldenDetails.criteria_array_converted[i] = null'><i *ngIf="goldenDetails.criteria_array_converted[i]" class="glyphicon glyphicon-remove"></i></div>
-		  		
+
 		  	</div>
 		  </div>
 		  <br>
@@ -136,4 +135,3 @@ Add a "send" on enter key.
 <pre>{{goldenDetails | json}}</pre>
 </div>
 </div>
-

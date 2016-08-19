@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/toPromise';
 
 import { DefaultDataService } from '../data.service';
 import { GoldenRow, CriteriaObject } from '../data-structure';
@@ -47,9 +48,11 @@ export class Golden implements OnInit {
     }
 
     getDefaultCriteria() {
-        this.defaultDataService.arrOfCriteria().then(data => {
+        this.defaultDataService.arrOfCriteria()
+          .then((data: CriteriaObject[]) => {
             this.criterialist = data;
-        });
+        })
+        .catch(error => console.error(error));
     }
 
     fetchOnEnter(event, oid) {
