@@ -3,7 +3,8 @@ export class GoldenRow {
     url: string;
     description: string;
     criteria_array: string;
-    criteria_array_converted: number[];
+    criteria_obj: {[key: string]: string};
+    // This is SUPER strange, but the input "range" write a string in reality not a number. :/
     creation_date: string;
     passfail: boolean;
     explanation: string;
@@ -11,6 +12,7 @@ export class GoldenRow {
     info_url: string;
     info_url_arr: string[];
     oid: number;
+    golden_uuid: string;
 }
 
 export class ResultValue {
@@ -30,7 +32,7 @@ export class ResultValue {
 }
 
 export class CriteriaObject {
-  // This get loaded first 
+  // This get loaded first
     uuid: string;
     name: string;
     deleted: boolean;
@@ -87,4 +89,10 @@ export class UserDetails {
   username: string;
   name: string;
   role: string;
+}
+
+export class DbCriteria {
+  crit_uuid: string;
+  crit_value: string; // Ssould be a number but it come as a string from the API.
+  golden_uuid: string;
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 
 import { DefaultDataService } from '../data.service';
-import { GoldenRow, CriteriaObject } from '../data-structure';
+import { GoldenRow, CriteriaObject, DbCriteria } from '../data-structure';
 import { CommService } from '../commService';
 
 @Component({
@@ -41,7 +41,6 @@ export class Golden implements OnInit {
     resetBlankImg() {
         this.defaultDataService.blankGoldenImg().then(data => {
             this.goldenDetails = data;
-            this.goldenDetails.criteria_array_converted = []; // It seems that a empty array do not overwrite a array that already exist when receiving blank data.
             this.manualOid = null;
         });
 
@@ -66,8 +65,8 @@ export class Golden implements OnInit {
             .subscribe((arrayOf1: GoldenRow[]) => {
                 if (arrayOf1[0]) {
                     this.goldenDetails = arrayOf1[0];
-                    this.goldenDetails.criteria_array_converted = JSON.parse(this.goldenDetails.criteria_array);
                     this.goldenDetails.info_url_arr = JSON.parse(this.goldenDetails.info_url) || [];
+                    this.getUuidCriteria(this.goldenDetails.golden_uuid);
                 } else {
                     this.resetBlankImg();
                 }
@@ -78,10 +77,28 @@ export class Golden implements OnInit {
             });
     }
 
-    onSubmit() {
-        this.goldenDetails.criteria_array = JSON.stringify(this.goldenDetails.criteria_array_converted);
-        this.goldenDetails.info_url = JSON.stringify(this.goldenDetails.info_url_arr);
+    private getUuidCriteria(uuid: string) {
+        this.commService.getUuidCriteria(uuid)
+            .subscribe((arrayOfCrit: DbCriteria[]) => {
+                this.goldenDetails.criteria_obj = this.getKeyPairCrit(arrayOfCrit);
+            },
+            error => {
+                console.log('ERROR:', error);
+                // Warn the user and display the Oid red?
+            });
+    }
 
+    private getKeyPairCrit = (crit: DbCriteria[]) => {
+      let tempObj: {[key: string]: string} = {};
+      for (let i = 0; i < crit.length; i++) {
+          tempObj[crit[i].crit_uuid] = crit[i].crit_value;
+      }
+      return tempObj;
+    }
+
+    onSubmit() {
+        this.goldenDetails.info_url = JSON.stringify(this.goldenDetails.info_url_arr);
+        // TODO: Add Criteria obj to the DB in a seperate call when we have the UUID.
         console.log('Submitting the form', this.goldenDetails);
         // if there is a OID then update that exact image, otherwise push a new one.
 

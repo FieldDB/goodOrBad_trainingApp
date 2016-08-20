@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { GoldenRow, ResultValue, RatioPerUserStr } from './data-structure';
+import { GoldenRow, ResultValue, RatioPerUserStr, DbCriteria } from './data-structure';
 import { Observable } from 'rxjs/Observable';
 // import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
@@ -42,6 +42,13 @@ export class CommService {
 
     getPreciceGolden(imgOid: number): Observable<GoldenRow[]> {
         let goldenImg: string = this.baseUrl + 'api/golden/' + imgOid;
+        return this.http.get(goldenImg)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    getUuidCriteria(uuid: string): Observable<DbCriteria[]> {
+        let goldenImg: string = this.baseUrl + 'api/golden/crit/' + uuid;
         return this.http.get(goldenImg)
             .map(this.extractData)
             .catch(this.handleError);

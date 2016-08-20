@@ -70,24 +70,29 @@ Add a "send" on enter key.
 
 		  <div *ngFor='let criteria of criterialist; let i = index;'>
 		  	{{criteria.name}} <strong *ngIf="criteria.deleted == true" class="bg-danger">- Disabled</strong>
-		  	<div class="row text-center" *ngIf="goldenDetails.criteria_array_converted && criteria.deleted != true">
+		  	<div class="row text-center" *ngIf="goldenDetails.criteria_obj && criteria.deleted != true">
 		  		<div class="col-xs-1">
-		  			<i *ngIf='goldenDetails.criteria_array_converted[i] != null && goldenDetails.criteria_array_converted[i] <=5'
+						<span *ngIf='criteria.min_name'>{{criteria.min_name}}</span>
+		  			<i *ngIf='goldenDetails.criteria_obj[criteria.uuid] != null && goldenDetails.criteria_obj[criteria.uuid] <=5 && !criteria.min_name'
 		  				class="glyphicon glyphicon-fire text-danger"></i></div>
-		  		<div class="col-xs-1">{{goldenDetails.criteria_array_converted[i]}}</div>
+		  		<div class="col-xs-1">{{goldenDetails.criteria_obj[criteria.uuid]}}</div>
 			  	<div class="col-xs-8">
 			  	<input
 			  		class="criteriaslider"
-			  		[ngClass]="{'default_null_value': goldenDetails.criteria_array_converted[i] == null}"
+			  		[ngClass]="{'default_null_value': goldenDetails.criteria_obj[criteria.uuid] == null}"
 			  		min=0,
 			  		max=10
 			  		steps=1
 			  		type="range"
-			  		[(ngModel)]="goldenDetails.criteria_array_converted[i]">
+			  		[(ngModel)]="goldenDetails.criteria_obj[criteria.uuid]">
 			  	</div>
-		  		<div class="col-xs-1"><i *ngIf='goldenDetails.criteria_array_converted[i] >5'class="glyphicon glyphicon-ok text-success"></i></div>
-		  		<div class="col-xs-1" (click)='goldenDetails.criteria_array_converted[i] = null'><i *ngIf="goldenDetails.criteria_array_converted[i]" class="glyphicon glyphicon-remove"></i></div>
-
+		  		<div class="col-xs-1">
+						<span *ngIf='criteria.max_name'>{{criteria.max_name}}</span>
+						<i *ngIf='goldenDetails.criteria_obj[criteria.uuid] >5 && !criteria.max_name' class="glyphicon glyphicon-ok text-success"></i>
+					</div>
+		  		<div class="col-xs-1" (click)='goldenDetails.criteria_obj[criteria.uuid] = null'>
+						<i *ngIf="goldenDetails.criteria_obj[criteria.uuid]" class="glyphicon glyphicon-remove"></i>
+					</div>
 		  	</div>
 		  </div>
 		  <br>
