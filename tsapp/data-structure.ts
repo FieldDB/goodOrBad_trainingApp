@@ -96,3 +96,8 @@ export class DbCriteria {
   crit_value: string; // Ssould be a number but it come as a string from the API.
   golden_uuid: string;
 }
+
+export class ReturnInfo {
+  uuid: string;
+  oid: number;
+}

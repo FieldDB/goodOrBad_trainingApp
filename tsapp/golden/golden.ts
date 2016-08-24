@@ -19,6 +19,7 @@ export class Golden implements OnInit {
     goldenDetails: GoldenRow;
     criterialist: CriteriaObject[];
     previousOid: number;
+    previousUuid: string;
     manualOid: number;
     private sub: any;
 
@@ -48,10 +49,10 @@ export class Golden implements OnInit {
 
     getDefaultCriteria() {
         this.defaultDataService.arrOfCriteria()
-          .then((data: CriteriaObject[]) => {
-            this.criterialist = data;
-        })
-        .catch(error => console.error(error));
+            .then((data: CriteriaObject[]) => {
+                this.criterialist = data;
+            })
+            .catch(error => console.error(error));
     }
 
     fetchOnEnter(event, oid) {
@@ -89,11 +90,11 @@ export class Golden implements OnInit {
     }
 
     private getKeyPairCrit = (crit: DbCriteria[]) => {
-      let tempObj: {[key: string]: string} = {};
-      for (let i = 0; i < crit.length; i++) {
-          tempObj[crit[i].crit_uuid] = crit[i].crit_value;
-      }
-      return tempObj;
+        let tempObj: { [key: string]: string } = {};
+        for (let i = 0; i < crit.length; i++) {
+            tempObj[crit[i].crit_uuid] = crit[i].crit_value;
+        }
+        return tempObj;
     }
 
     onSubmit() {
@@ -108,7 +109,13 @@ export class Golden implements OnInit {
                 .subscribe(serverAnswer => {
                     this.resetBlankImg();
                     console.log('Success with: ', serverAnswer);
-                    this.previousOid = 1234;
+                    this.previousOid = serverAnswer.oid;
+                    for (let crit in this.goldenDetails.criteria_obj) {
+                        // Note: This is bad design, it would be better to check that all data went there properly.
+                        if (this.goldenDetails.criteria_obj[crit] !== undefined) {
+                            this.commService.updateGoldenCrit(serverAnswer.uuid, crit, this.goldenDetails.criteria_obj[crit]);
+                        }
+                    }
                 },
                 error => {
                     console.log('ERROR:', error);
@@ -119,7 +126,21 @@ export class Golden implements OnInit {
                 .subscribe(serverAnswer => {
                     this.resetBlankImg();
                     console.log('Success with: ', serverAnswer);
-                    this.previousOid = 1234;
+                    this.previousOid = serverAnswer[0].oid;
+                    let uuid = serverAnswer[0].uuid;
+                    let totalSend = 0;
+                    for (let crit in this.goldenDetails.criteria_obj) {
+                        // Note: This is bad design, it would be better to check that all data went there properly.
+                        if (this.goldenDetails.criteria_obj[crit] !== undefined) {
+                            this.commService.updateGoldenCrit(uuid, crit, this.goldenDetails.criteria_obj[crit])
+                                .subscribe(pushAnsw => {
+                                    if (pushAnsw.rowCount === 1) {
+                                        totalSend++;
+                                        console.log('totalSend:', totalSend);
+                                    }
+                                }, error => { console.log('ERROR:', error); });
+                        }
+                    }
                 },
                 error => {
                     console.log('ERROR:', error);

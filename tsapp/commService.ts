@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { GoldenRow, ResultValue, RatioPerUserStr, DbCriteria } from './data-structure';
+import { GoldenRow, ResultValue, RatioPerUserStr, DbCriteria, ReturnInfo } from './data-structure';
 import { Observable } from 'rxjs/Observable';
 // import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
@@ -54,7 +54,7 @@ export class CommService {
             .catch(this.handleError);
     }
 
-    postNewGoldenImg(result: GoldenRow): Observable<GoldenRow> {
+    postNewGoldenImg(result: GoldenRow): Observable<ReturnInfo> {
         let body = JSON.stringify(result);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -64,12 +64,26 @@ export class CommService {
             .catch(this.handleError);
     }
 
-    updateGoldenImg(result: GoldenRow, oid: number): Observable<GoldenRow> {
+    updateGoldenImg(result: GoldenRow, oid: number): Observable<ReturnInfo> {
         let body = JSON.stringify(result);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.baseUrl + 'api/golden/' + oid, body, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    updateGoldenCrit(uuid: string, key: string, value: string): Observable<{rowCount: number}> {
+        let body = JSON.stringify({
+          'golden_uuid': uuid,
+          'crit_uuid': key,
+          'crit_value': value
+        });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        console.log('updating img', body);
+        return this.http.post(this.baseUrl + 'api/golden/crit', body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
