@@ -17,7 +17,6 @@ export const BlankGoldenImg: GoldenRow = {
     filename: '',
     url: '',
     description: '',
-    criteria_array: '',
     criteria_obj: {},
     creation_date: '',
     passfail: null,
@@ -26,5 +25,5 @@ export const BlankGoldenImg: GoldenRow = {
     info_url: '',
     info_url_arr: [],
     oid: null,
-    golden_uuid: null
+    uuid: null
 };

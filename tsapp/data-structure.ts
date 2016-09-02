@@ -2,7 +2,6 @@ export class GoldenRow {
     filename: string;
     url: string;
     description: string;
-    criteria_array: string;
     criteria_obj: {[key: string]: string};
     // This is SUPER strange, but the input "range" write a string in reality not a number. :/
     creation_date: string;
@@ -12,7 +11,7 @@ export class GoldenRow {
     info_url: string;
     info_url_arr: string[];
     oid: number;
-    golden_uuid: string;
+    uuid: string;
 }
 
 export class ResultValue {

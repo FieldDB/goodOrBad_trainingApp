@@ -68,7 +68,7 @@ export class Golden implements OnInit {
                 if (arrayOf1[0]) {
                     this.goldenDetails = arrayOf1[0];
                     this.goldenDetails.info_url_arr = JSON.parse(this.goldenDetails.info_url) || [];
-                    this.getUuidCriteria(this.goldenDetails.golden_uuid);
+                    this.getUuidCriteria(this.goldenDetails.uuid);
                 } else {
                     this.resetBlankImg();
                 }
@@ -82,7 +82,11 @@ export class Golden implements OnInit {
     private getUuidCriteria(uuid: string) {
         this.commService.getUuidCriteria(uuid)
             .subscribe((arrayOfCrit: DbCriteria[]) => {
-                this.goldenDetails.criteria_obj = this.getKeyPairCrit(arrayOfCrit);
+                if (arrayOfCrit[0]) {
+                  this.goldenDetails.criteria_obj = this.getKeyPairCrit(arrayOfCrit);
+                } else {
+                  this.goldenDetails.criteria_obj = {};
+                }
             },
             error => {
                 console.log('ERROR:', error);
@@ -119,10 +123,9 @@ export class Golden implements OnInit {
             this.commService.postNewGoldenImg(this.goldenDetails)
                 .subscribe(serverAnswer => {
                     this.previousOid = serverAnswer[0].oid;
-                    let uuid = serverAnswer[0].uuid;
                     let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
                     if (critToSend[0] !== undefined) {
-                        this.commService.updateGoldenCrit(uuid, critToSend)
+                        this.commService.updateGoldenCrit(serverAnswer[0].uuid, critToSend)
                           .subscribe(critAnswer => {
                             this.resetBlankImg();
                             // console.log('Success:', critAnswer);
@@ -140,10 +143,9 @@ export class Golden implements OnInit {
             this.commService.updateGoldenImg(this.goldenDetails, this.goldenDetails.oid)
                 .subscribe(serverAnswer => {
                     this.previousOid = serverAnswer[0].oid;
-                    let uuid = serverAnswer[0].uuid;
                     let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
                     if (critToSend[0] !== undefined) {
-                        this.commService.updateGoldenCrit(uuid, critToSend)
+                        this.commService.updateGoldenCrit(serverAnswer[0].uuid, critToSend)
                           .subscribe(critAnswer => {
                             this.resetBlankImg();
                             // console.log('Success:', critAnswer);
