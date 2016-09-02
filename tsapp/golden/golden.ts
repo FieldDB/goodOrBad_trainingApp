@@ -57,7 +57,7 @@ export class Golden implements OnInit {
     }
 
     fetchOnEnter(event, oid) {
-        if (event.keyCode === 13 && oid) {
+        if (event.keyCode === 13 && oid || event === 'getOld' && oid) {
             this.getPreciceImg(oid);
         }
     }

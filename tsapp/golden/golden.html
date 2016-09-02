@@ -14,6 +14,7 @@ Add a "send" on enter key.
 	</div>
 	<div class="col-sm-6 text-center">
 		<button class="btn btn-default" [ngClass]="{'btn-info': goldenDetails.oid}" (click)="resetBlankImg()">Reset to Blank</button>
+		<button class="btn btn-default" *ngIf='previousOid' (click)="fetchOnEnter('getOld', previousOid)">Get Previous image</button>
 	</div>
 </div>
 <br>
