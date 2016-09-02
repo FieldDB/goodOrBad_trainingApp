@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { GoldenRow, ResultValue, RatioPerUserStr, DbCriteria, ReturnInfo } from './data-structure';
+import { GoldenRow, ResultValue, RatioPerUserStr, DbCriteria, ReturnInfo, CriteriaToSend } from './data-structure';
 import { Observable } from 'rxjs/Observable';
 // import 'rxjs/Rx';
 // import 'rxjs/add/operator/toPromise';
@@ -74,12 +74,12 @@ export class CommService {
             .catch(this.handleError);
     }
 
-    updateGoldenCrit(uuid: string, key: string, value: string): Observable<{rowCount: number}> {
+    updateGoldenCrit(uuid: string, critToSend: CriteriaToSend[]): Observable<{rowCount: number}> {
         let body = JSON.stringify({
-          'golden_uuid': uuid,
-          'crit_uuid': key,
-          'crit_value': value
+          'uuid': uuid,
+          'valueArray': critToSend
         });
+
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         console.log('updating img', body);

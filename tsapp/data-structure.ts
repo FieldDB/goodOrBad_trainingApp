@@ -101,3 +101,8 @@ export class ReturnInfo {
   uuid: string;
   oid: number;
 }
+
+export class CriteriaToSend {
+  'crit_uuid': string;
+  'value': string;
+}

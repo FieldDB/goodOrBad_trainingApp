@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 
 import { DefaultDataService } from '../data.service';
-import { GoldenRow, CriteriaObject, DbCriteria } from '../data-structure';
+import { GoldenRow, CriteriaObject, DbCriteria, CriteriaToSend } from '../data-structure';
 import { CommService } from '../commService';
 
 @Component({
@@ -43,6 +43,7 @@ export class Golden implements OnInit {
         this.defaultDataService.blankGoldenImg().then(data => {
             this.goldenDetails = data;
             this.manualOid = null;
+            this.goldenDetails.criteria_obj = {};
         });
 
     }
@@ -97,6 +98,16 @@ export class Golden implements OnInit {
         return tempObj;
     }
 
+    private builtKeyValueArr = (crit: { [key: string]: string }) => {
+      let keyValuePair: CriteriaToSend[] = [];
+      for (let someKey in crit) {
+        if (crit[someKey] !== undefined) {
+          keyValuePair.push({'crit_uuid': someKey, 'value': crit[someKey]});
+        }
+      }
+      return keyValuePair;
+    }
+
     onSubmit() {
         this.goldenDetails.info_url = JSON.stringify(this.goldenDetails.info_url_arr);
         // TODO: Add Criteria obj to the DB in a seperate call when we have the UUID.
@@ -107,14 +118,18 @@ export class Golden implements OnInit {
             // New img so Submit as New.
             this.commService.postNewGoldenImg(this.goldenDetails)
                 .subscribe(serverAnswer => {
-                    this.resetBlankImg();
-                    console.log('Success with: ', serverAnswer);
-                    this.previousOid = serverAnswer.oid;
-                    for (let crit in this.goldenDetails.criteria_obj) {
-                        // Note: This is bad design, it would be better to check that all data went there properly.
-                        if (this.goldenDetails.criteria_obj[crit] !== undefined) {
-                            this.commService.updateGoldenCrit(serverAnswer.uuid, crit, this.goldenDetails.criteria_obj[crit]);
-                        }
+                    this.previousOid = serverAnswer[0].oid;
+                    let uuid = serverAnswer[0].uuid;
+                    let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
+                    if (critToSend[0] !== undefined) {
+                        this.commService.updateGoldenCrit(uuid, critToSend)
+                          .subscribe(critAnswer => {
+                            this.resetBlankImg();
+                            // console.log('Success:', critAnswer);
+                          },
+                          error => {
+                              console.log('ERROR:', error);
+                          });
                     }
                 },
                 error => {
@@ -124,22 +139,18 @@ export class Golden implements OnInit {
             // Update old img
             this.commService.updateGoldenImg(this.goldenDetails, this.goldenDetails.oid)
                 .subscribe(serverAnswer => {
-                    this.resetBlankImg();
-                    console.log('Success with: ', serverAnswer);
                     this.previousOid = serverAnswer[0].oid;
                     let uuid = serverAnswer[0].uuid;
-                    let totalSend = 0;
-                    for (let crit in this.goldenDetails.criteria_obj) {
-                        // Note: This is bad design, it would be better to check that all data went there properly.
-                        if (this.goldenDetails.criteria_obj[crit] !== undefined) {
-                            this.commService.updateGoldenCrit(uuid, crit, this.goldenDetails.criteria_obj[crit])
-                                .subscribe(pushAnsw => {
-                                    if (pushAnsw.rowCount === 1) {
-                                        totalSend++;
-                                        console.log('totalSend:', totalSend);
-                                    }
-                                }, error => { console.log('ERROR:', error); });
-                        }
+                    let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
+                    if (critToSend[0] !== undefined) {
+                        this.commService.updateGoldenCrit(uuid, critToSend)
+                          .subscribe(critAnswer => {
+                            this.resetBlankImg();
+                            // console.log('Success:', critAnswer);
+                          },
+                          error => {
+                              console.log('ERROR:', error);
+                          });
                     }
                 },
                 error => {
