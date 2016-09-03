@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CORE_DIRECTIVES, NgIf, NgFor, NgClass } from '@angular/common';
 
 import { GoldenRow, ResultValue, CriteriaObject } from '../data-structure';
+import { GetOnlyActive } from './criteria.pipe';
 import { DefaultDataService } from '../data.service';
 import { CommService } from '../commService';
 
@@ -10,6 +11,7 @@ import { CommService } from '../commService';
     directives: [CORE_DIRECTIVES, NgIf, NgClass, NgFor],
     templateUrl: 'tsapp/pictpage/pictpage.html',
     styleUrls: ['tsapp/pictpage/pictpage.css', 'tsapp/common/slider-style.css'],
+    pipes: [GetOnlyActive],
     providers: [CommService, DefaultDataService]
 })
 
@@ -64,14 +66,14 @@ export class Pictpage implements OnInit {
             .subscribe((arrayOf1: GoldenRow[]) => {
                 // Get the Data from the server
                 this.imgToInspect = arrayOf1[0];
-                this.imgToInspect.criteria_array_converted = JSON.parse(arrayOf1[0].criteria_array);
+                // this.imgToInspect.criteria_array_converted = JSON.parse(arrayOf1[0].criteria_array);
                 if (!this.sliderStyle) {
                     // True false so I have to normalize them. Assomption here that the slider are 0-10. So Everything bellow 5 go to 0 and everything higher go to 1.
-                    this.imgToInspect.criteria_array_converted = this.imgToInspect.criteria_array_converted.map(item => {
-                        if (item < 5) {
-                            return 0;
-                        } else { return 1; }
-                    });
+                    // this.imgToInspect.criteria_array_converted = this.imgToInspect.criteria_array_converted.map(item => {
+                    //     if (item < 5) {
+                    //         return 0;
+                    //     } else { return 1; }
+                    // });
                 }
                 if (this.imgToInspect.info_url) {
                     this.imgToInspect.info_url_arr = JSON.parse(this.imgToInspect.info_url);
