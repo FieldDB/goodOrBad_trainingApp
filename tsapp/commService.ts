@@ -21,7 +21,7 @@ export class CommService {
             .catch(this.handleError);
     }
 
-    postDbResult(result: ResultValue): Observable<ResultValue> {
+    postDbResult(result: ResultValue): Observable<ReturnInfo> {
         let resultUrl = this.baseUrl + 'api/result';  // URL to web api
         let body = JSON.stringify(result);
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -84,6 +84,20 @@ export class CommService {
         let options = new RequestOptions({ headers: headers });
         console.log('updating img', body);
         return this.http.post(this.baseUrl + 'api/golden/crit', body, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    updateAnswerCrit(uuid: string, critToSend: CriteriaToSend[]): Observable<{rowCount: number}> {
+        let body = JSON.stringify({
+          'uuid': uuid,
+          'valueArray': critToSend
+        });
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        console.log('updating img', body);
+        return this.http.post(this.baseUrl + 'api/result/crit', body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

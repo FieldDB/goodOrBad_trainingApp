@@ -21,8 +21,7 @@ export class ResultValue {
     success: boolean;
     fail_passed: boolean;
     positive_failed: boolean;
-    delta_criteria_array: string;
-    delta_array: number[];
+    answer: {[key: string]: string};
     inspection_date: string;
     user_comments: string;
     type: string;
@@ -103,5 +102,5 @@ export class ReturnInfo {
 
 export class CriteriaToSend {
   'crit_uuid': string;
-  'value': string;
+  'value': string | number;
 }

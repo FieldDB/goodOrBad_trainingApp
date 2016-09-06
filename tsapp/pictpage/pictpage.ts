@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CORE_DIRECTIVES, NgIf, NgFor, NgClass } from '@angular/common';
 
-import { GoldenRow, ResultValue, CriteriaObject } from '../data-structure';
+import { GoldenRow, ResultValue, CriteriaObject, DbCriteria, CriteriaToSend} from '../data-structure';
 import { GetOnlyActive } from './criteria.pipe';
 import { DefaultDataService } from '../data.service';
 import { CommService } from '../commService';
@@ -51,8 +51,7 @@ export class Pictpage implements OnInit {
             'success': null,
             'fail_passed': null,
             'positive_failed': null,
-            'delta_criteria_array': '',
-            'delta_array': [],
+            'answer': {},
             'inspection_date': '',
             'user_comments': '',
             'type': '',
@@ -66,37 +65,50 @@ export class Pictpage implements OnInit {
             .subscribe((arrayOf1: GoldenRow[]) => {
                 // Get the Data from the server
                 this.imgToInspect = arrayOf1[0];
-                // this.imgToInspect.criteria_array_converted = JSON.parse(arrayOf1[0].criteria_array);
-                if (!this.sliderStyle) {
-                    // True false so I have to normalize them. Assomption here that the slider are 0-10. So Everything bellow 5 go to 0 and everything higher go to 1.
-                    // this.imgToInspect.criteria_array_converted = this.imgToInspect.criteria_array_converted.map(item => {
-                    //     if (item < 5) {
-                    //         return 0;
-                    //     } else { return 1; }
-                    // });
-                }
-                if (this.imgToInspect.info_url) {
-                    this.imgToInspect.info_url_arr = JSON.parse(this.imgToInspect.info_url);
-                }
-                // Also populate the Default Result to send back at the end.
                 this.resultValue.filenameid = this.imgToInspect.oid;  // This should be a OID or something unique.
                 this.resultValue.type = this.imgToInspect.type; // This could be fetch directly in the SQL by joining table, but I dont like joint of big table for 1 value only.
                 this.resultValue.golden_passfail_state = this.imgToInspect.passfail; // So we can know the % of Good and Bad img were inspected.
+                if (this.imgToInspect.info_url) {
+                    this.imgToInspect.info_url_arr = JSON.parse(this.imgToInspect.info_url);
+                }
+                // Get the Defect associated with that uuid:
+                this.commService.getUuidCriteria(this.imgToInspect.uuid)
+                    .subscribe((arrayOfCrit: DbCriteria[]) => {
+                        if (arrayOfCrit[0]) {
+                          this.imgToInspect.criteria_obj = this.getKeyPairCrit(arrayOfCrit);
+                        } else {
+                          this.imgToInspect.criteria_obj = {};
+                        }
+                    },
+                    error => {
+                        console.log('ERROR:', error);
+                        // Warn the user and display the Oid red?
+                    });
             });
     }
 
-    setCriteriaX(index, target, value) {
-        // Value or target can be 0
-        if (!this.submited && target !== undefined && value !== undefined) {
-            this.blockSubmit = false;
-            this.resultValue.delta_array[index] = target - value;
+    private getKeyPairCrit = (crit: DbCriteria[]) => {
+        let tempObj: { [key: string]: string } = {};
+        for (let i = 0; i < crit.length; i++) {
+            tempObj[crit[i].crit_uuid] = crit[i].crit_value;
         }
+        return tempObj;
+    }
+
+    private builtKeyValueArr = (crit: { [key: string]: string }, answer: { [key: string]: string }) => {
+      let keyValuePair: CriteriaToSend[] = [];
+      for (let someKey in crit) {
+        if (crit[someKey] !== undefined && answer[someKey] !== undefined) {
+          keyValuePair.push({'crit_uuid': someKey, 'value': parseInt(crit[someKey], 10) - parseInt(answer[someKey], 10)});
+        }
+      }
+      return keyValuePair;
     }
 
     submitForm(result) {
         // Here submit the img and when we have feedback(promesses) we can call it submitted.
         this.resultValue.timeinsec = Math.round((Date.now() - this.initialTimeStamp) / 1000); // Time in Second it took.
-        this.resultValue.delta_criteria_array = JSON.stringify(this.resultValue.delta_array);
+        // this.resultValue.delta_criteria_array = JSON.stringify(this.resultValue.delta_array);
         if (result === this.imgToInspect.passfail) {
             // Both pass or both fail so It is all Good! The user took the good decision.
             this.resultValue.success = true;
@@ -109,12 +121,24 @@ export class Pictpage implements OnInit {
             this.resultValue.success = false;
             this.resultValue.fail_passed = true;
         }
+        let keyValueArr = [];
+        if (this.imgToInspect.criteria_obj) {
+          keyValueArr = this.builtKeyValueArr(this.imgToInspect.criteria_obj, this.resultValue.answer);
+        }
 
         this.commService.postDbResult(this.resultValue)
             .subscribe(
             serverAnswer => {
                 this.submited = true;
                 this.oidOfResult = serverAnswer.oid;
+                console.log('serverAnswer: ', serverAnswer);
+                this.commService.updateAnswerCrit(serverAnswer.uuid, keyValueArr)
+                  .subscribe(servAnswer => {
+                    console.log('AFTER PUSH: ', servAnswer);
+                  },
+                  error => {
+                      console.log('ERROR:', error);
+                  });
             },
             error => {
                 console.log('ERROR:', error);
