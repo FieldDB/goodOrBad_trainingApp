@@ -14,33 +14,34 @@
 						[ngClass]='{"col-xs-10": submited }'
 						*ngIf='imgToInspect.criteria_obj && imgToInspect.criteria_obj[criteria.uuid]'
 						(click)='blockSubmit = false'>
-	  				<div>{{criteria.name}} -- {{imgToInspect.criteria_obj[criteria.uuid]}}</div>
+	  				<div>{{criteria.name}} -- {{resultValue.answer[criteria.uuid]}}
+							<span *ngIf='submited'> Target: {{imgToInspect.criteria_obj[criteria.uuid]}}</span>
+						</div>
 
   					<!-- After submition show the user the difference. -->
 	  					<input
 	  						class="criteriaslider"
-	  						[ngClass]='sliderClass(resultValue.answer[criteria.uuid])'
+	  						[ngClass]='sliderClass(resultValue.answer[criteria.uuid], imgToInspect.criteria_obj[criteria.uuid])'
 	  						*ngIf=criteria.selector
 	  						min=0,
 	  						max=10
 	  						steps=1
 	  						type="range"
 	  						[disabled]="submited"
-	  						#slider
-	  						(change)='resultValue.answer[criteria.uuid] = slider.value'>
+								[(ngModel)]="resultValue.answer[criteria.uuid]">
 	  					<div>
-		  					<div *ngIf=!criteria.selector class="btn-group btn-toggle" #btnGroup>
+		  					<div *ngIf=!criteria.selector class="btn-group btn-toggle">
 									<!-- Yes Button do Write the "0" and "1" because I keep it uniform witht he slider that write String even if it is a number type.  Maybe other Angular version will fix that.-->
 		  					  <button #btnBad class="btn btn-lg btn-default"
 		  					  	[disabled]="submited"
-		  					  	[ngClass]='btnClass(btnGroup.value, 0, resultValue.answer[criteria.uuid])'
-		  					  	(click)='resultValue.answer[criteria.uuid] = 0;btnGroup.value = "0"'>
+		  					  	[ngClass]='btnClass(resultValue.answer[criteria.uuid], 0, imgToInspect.criteria_obj[criteria.uuid])'
+		  					  	(click)='resultValue.answer[criteria.uuid] = 0'>
 		  					  	{{criteria.min_name}}
 		  					  </button>
 		  					  <button #btnGood class="btn btn-lg btn-default"
 		  					  	[disabled]="submited"
-		  					  	[ngClass]='btnClass(btnGroup.value, 1, resultValue.answer[criteria.uuid])'
-		  					  	(click)='resultValue.answer[criteria.uuid] = 1;btnGroup.value = "1"'>
+		  					  	[ngClass]='btnClass(resultValue.answer[criteria.uuid], 1, imgToInspect.criteria_obj[criteria.uuid])'
+		  					  	(click)='resultValue.answer[criteria.uuid] = 1;'>
 										{{criteria.max_name}}
 		  					  </button>
 		  					</div>
@@ -50,7 +51,6 @@
   					<span *ngIf="resultValue.answer[criteria.uuid] > 1">Too Low / Loose? <!-- Meaning the target is Way higher than the selected value --> </span>
   					<span *ngIf="resultValue.answer[criteria.uuid] <= 1 && resultValue.answer[criteria.uuid] >= -1">Around target</span>
   					<span *ngIf="resultValue.answer[criteria.uuid] < -1"> Too High / Strict? <!-- Meaning the target is lower than the selected value --> </span>
-  					{{resultValue.answer[criteria.uuid]}}
   				</div>
   				<div *ngIf='submited && !criteria.selector' [ngClass]="{'bg-danger': submited && resultValue.answer[criteria.uuid] != 0, 'col-xs-2': submited}">
   					<span *ngIf="resultValue.answer[criteria.uuid] == 1 || resultValue.answer[criteria.uuid] == -1">Wrong</span>

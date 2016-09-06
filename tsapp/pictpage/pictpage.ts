@@ -152,14 +152,17 @@ export class Pictpage implements OnInit {
         this.getOneImg();
     }
 
-    sliderClass(delta: number) {
+    sliderClass(answer: number, golden: number) {
         if (!this.submited) {
-            // Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function...
-            if (delta === null || delta === undefined) { return 'default_null_value'; }
+          if (answer === null || answer === undefined) {
+            return 'default_null_value'; // Meaning I am processing but still did not click on anything.
+          }
         } else {
             // TODO: on submit change the class Logic to set the class Green or Red depending if the user was succedful or Failed the criteria. (Check with tolerances)
-            if (delta === null || delta === undefined) { return 'default_null_value'; }
-            if (Math.abs(delta) <= 1) {
+            if (answer === null || answer === undefined || golden === null || golden === undefined) {
+                return 'default_null_value'; // Submitted but I am missing 1 info to continue.
+            }
+            if (Math.abs(answer - golden) <= 1) {
                 return 'slider_passing_value';
             } else {
                 return 'slider_failing_value';
@@ -167,17 +170,24 @@ export class Pictpage implements OnInit {
         }
     }
 
-    btnClass(value: number, target: number, resultValue: number) {
-        // Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function...
-        if (value === null || value === undefined || resultValue === null || resultValue === undefined) {
-            return 'btn-info';
-        } else if (value === 1 && target === 1) {
-            return 'btn-success';
-        } else if (value === 0 && target === 0) {
-            // This is conter intuitive, but it is because we have the Slider system also. that mean 1 is not always 'Good' and 0 is not always 'Bad'
-            // it depend on what the user did input. and that will create a Delta value if the user failed.
-            return 'btn-danger';
+    btnClass(value: number, target: number, golden: string) {
+      // Yes this should go in a service but it is soooo small it is a shame to put it away alone like a rejected function...
+      if (!this.submited) {
+        if (value === null || value === undefined) {
+          return 'btn-info';
+        } else if (value === target) {
+          return 'btn-success';
         }
+      } else {
+        // The answer were submitted so give a feedback to the user
+        if (value === null || value === undefined) {
+          return 'btn-info';
+        } else if (value === parseInt(golden, 10)) {
+          return 'btn-success';
+        } else {
+          return 'btn-danger';
+        }
+      }
     }
 
 }
