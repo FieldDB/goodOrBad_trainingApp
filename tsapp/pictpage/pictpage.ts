@@ -95,6 +95,12 @@ export class Pictpage implements OnInit {
         return tempObj;
     }
 
+    validateCompletion = (crit: { [key: string]: number }, answer: { [key: string]: number }) => {
+      if (Object.keys(crit).length === Object.keys(answer).length) {
+          this.blockSubmit = false;
+      }
+    }
+
     private builtKeyValueArr = (crit: { [key: string]: number }, answer: { [key: string]: number }) => {
       let keyValuePair: CriteriaToSend[] = [];
       for (let someKey in crit) {

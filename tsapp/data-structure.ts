@@ -91,8 +91,7 @@ export class UserDetails {
 
 export class DbCriteria {
   crit_uuid: string;
-  crit_value: string; // Ssould be a number but it come as a string from the API.
-  golden_uuid: string;
+  crit_value: string; // Should be a number but it come as a string from the API.
 }
 
 export class ReturnInfo {

@@ -13,7 +13,7 @@
   				<div class="col-xs-12"
 						[ngClass]='{"col-xs-10": submited }'
 						*ngIf='imgToInspect.criteria_obj && imgToInspect.criteria_obj[criteria.uuid]'
-						(click)='blockSubmit = false'>
+						(click)='validateCompletion(imgToInspect.criteria_obj, resultValue.answer)'>
 	  				<div>{{criteria.name}} -- {{resultValue.answer[criteria.uuid]}}
 							<span *ngIf='submited'> Target: {{imgToInspect.criteria_obj[criteria.uuid]}}</span>
 						</div>
