@@ -101,6 +101,19 @@ export class Pictpage implements OnInit {
       }
     }
 
+    howCloseToTheTarget = (answer: number, golden: number) => {
+      if (answer && golden) {
+        let diff = answer - golden;
+        if (Math.abs(diff) <= 1) {
+            return 'On target';
+        } else if (diff < 1) {
+          return 'Too Low';
+        } else {
+          return 'Too Strict';
+        }
+      }
+    }
+
     private builtKeyValueArr = (crit: { [key: string]: number }, answer: { [key: string]: number }) => {
       let keyValuePair: CriteriaToSend[] = [];
       for (let someKey in crit) {

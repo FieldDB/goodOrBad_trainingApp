@@ -80,14 +80,27 @@ Add a "send" on enter key.
 			  	<div class="col-xs-8">
 			  	<input
 			  		class="criteriaslider"
+						*ngIf="criteria.selector"
 			  		[ngClass]="{'default_null_value': goldenDetails.criteria_obj[criteria.uuid] == null}"
-			  		min=0,
+			  		min=0
 			  		max=10
 			  		steps=1
 			  		type="range"
 						[(ngModel)]="goldenDetails.criteria_obj[criteria.uuid]"
 			  		#slider
 						(change)="convertToNbr(criteria.uuid, slider.value)">
+						<div *ngIf=!criteria.selector class="btn-group btn-toggle">
+							<button class="btn btn-lg btn-default"
+								[ngClass]='{"btn-success": goldenDetails.criteria_obj[criteria.uuid] == 0}'
+								(click)='goldenDetails.criteria_obj[criteria.uuid] = 0'>
+								{{criteria.min_name}}
+							</button>
+							<button class="btn btn-lg btn-default"
+								[ngClass]='{"btn-success": goldenDetails.criteria_obj[criteria.uuid] == 10}'
+								(click)='goldenDetails.criteria_obj[criteria.uuid] = 10'>
+								{{criteria.max_name}}
+							</button>
+						</div>
 			  	</div>
 		  		<div class="col-xs-1">
 						<span *ngIf='criteria.max_name'>{{criteria.max_name}}</span>
