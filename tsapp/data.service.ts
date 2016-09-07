@@ -10,7 +10,6 @@ export class DefaultDataService {
     private baseUrl = 'http://localhost:8010/api/view/criteria';
     constructor(private http: Http) { }
     arrOfCriteria() {
-      console.log('calling the promises of Criteria');
       return this.http.get(this.baseUrl)
              .toPromise()
              .then(response => response.json() as CriteriaObject[])

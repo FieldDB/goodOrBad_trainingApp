@@ -88,18 +88,18 @@ export class Pictpage implements OnInit {
     }
 
     private getKeyPairCrit = (crit: DbCriteria[]) => {
-        let tempObj: { [key: string]: string } = {};
+        let tempObj: { [key: string]: number } = {};
         for (let i = 0; i < crit.length; i++) {
-            tempObj[crit[i].crit_uuid] = crit[i].crit_value;
+            tempObj[crit[i].crit_uuid] = parseInt(crit[i].crit_value, 10);
         }
         return tempObj;
     }
 
-    private builtKeyValueArr = (crit: { [key: string]: string }, answer: { [key: string]: string }) => {
+    private builtKeyValueArr = (crit: { [key: string]: number }, answer: { [key: string]: number }) => {
       let keyValuePair: CriteriaToSend[] = [];
       for (let someKey in crit) {
         if (crit[someKey] !== undefined && answer[someKey] !== undefined) {
-          keyValuePair.push({'crit_uuid': someKey, 'value': parseInt(crit[someKey], 10) - parseInt(answer[someKey], 10)});
+          keyValuePair.push({'crit_uuid': someKey, 'value': crit[someKey] - answer[someKey]});
         }
       }
       return keyValuePair;
@@ -150,6 +150,11 @@ export class Pictpage implements OnInit {
         // Add info on the last Post and move on.
         window.alert('TODO: Make the node side and fix me after.');
         this.getOneImg();
+    }
+
+    convertToNbr(destination: string, value: string) {
+      // This is Bad, but The <inout type="range" will write a String not a number so it is complex with Typescript
+      this.resultValue.answer[destination] = parseInt(value, 10);
     }
 
     sliderClass(answer: number, golden: number) {

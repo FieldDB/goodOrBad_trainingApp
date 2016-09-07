@@ -85,7 +85,9 @@ Add a "send" on enter key.
 			  		max=10
 			  		steps=1
 			  		type="range"
-			  		[(ngModel)]="goldenDetails.criteria_obj[criteria.uuid]">
+						[(ngModel)]="goldenDetails.criteria_obj[criteria.uuid]"
+			  		#slider
+						(change)="convertToNbr(criteria.uuid, slider.value)">
 			  	</div>
 		  		<div class="col-xs-1">
 						<span *ngIf='criteria.max_name'>{{criteria.max_name}}</span>

@@ -2,7 +2,7 @@ export class GoldenRow {
     filename: string;
     url: string;
     description: string;
-    criteria_obj: {[key: string]: string};
+    criteria_obj: {[key: string]: number};
     // This is SUPER strange, but the input "range" write a string in reality not a number. :/
     creation_date: string;
     passfail: boolean;
@@ -21,7 +21,7 @@ export class ResultValue {
     success: boolean;
     fail_passed: boolean;
     positive_failed: boolean;
-    answer: {[key: string]: string};
+    answer: {[key: string]: number};
     inspection_date: string;
     user_comments: string;
     type: string;

@@ -28,7 +28,9 @@
 	  						steps=1
 	  						type="range"
 	  						[disabled]="submited"
-								[(ngModel)]="resultValue.answer[criteria.uuid]">
+								[(ngModel)]="resultValue.answer[criteria.uuid]"
+								#slider
+								(change)="convertToNbr(criteria.uuid, slider.value)">
 	  					<div>
 		  					<div *ngIf=!criteria.selector class="btn-group btn-toggle">
 									<!-- Yes Button do Write the "0" and "1" because I keep it uniform witht he slider that write String even if it is a number type.  Maybe other Angular version will fix that.-->

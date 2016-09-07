@@ -95,14 +95,14 @@ export class Golden implements OnInit {
     }
 
     private getKeyPairCrit = (crit: DbCriteria[]) => {
-        let tempObj: { [key: string]: string } = {};
+        let tempObj: { [key: string]: number } = {};
         for (let i = 0; i < crit.length; i++) {
-            tempObj[crit[i].crit_uuid] = crit[i].crit_value;
+            tempObj[crit[i].crit_uuid] = parseInt(crit[i].crit_value, 10);
         }
         return tempObj;
     }
 
-    private builtKeyValueArr = (crit: { [key: string]: string }) => {
+    private builtKeyValueArr = (crit: { [key: string]: number }) => {
       let keyValuePair: CriteriaToSend[] = [];
       for (let someKey in crit) {
         if (crit[someKey] !== undefined) {
@@ -179,5 +179,10 @@ export class Golden implements OnInit {
         let nbr2: number = Math.floor(Math.random() * 200) + 250; // Nbr between 250 and 450px
         let grey: string = Math.random() > 0.5 ? 'g/' : '';
         this.goldenDetails.url = 'https://placekitten.com/' + grey + nbr1 + '/' + nbr2;
+    }
+
+    convertToNbr(destination: string, value: string) {
+      // This is Bad, but The <inout type="range" will write a String not a number so it is complex with Typescript
+      this.goldenDetails.criteria_obj[destination] = parseInt(value, 10);
     }
 }
