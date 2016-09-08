@@ -25,5 +25,6 @@ export const BlankGoldenImg: GoldenRow = {
     info_url: '',
     info_url_arr: [],
     oid: null,
-    uuid: null
+    uuid: null,
+    deleted: false
 };

@@ -12,6 +12,7 @@ export class GoldenRow {
     info_url_arr: string[];
     oid: number;
     uuid: string;
+    deleted: boolean;
 }
 
 export class ResultValue {
