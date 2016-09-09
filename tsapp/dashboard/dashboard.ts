@@ -5,12 +5,13 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 // Saller Analytics module
 import { AllGoldenImgList } from './allGoldenImgList.component';
 import { SuccessRate } from './successRate.component';
+import { TopMistakeImg } from './topMistakeImg.component';
 
 
 @Component({
     selector: 'dashboard',
     templateUrl: 'tsapp/dashboard/dashboard.html',
-    directives: [NgIf, NgFor, AllGoldenImgList, SuccessRate, ROUTER_DIRECTIVES],
+    directives: [NgIf, NgFor, AllGoldenImgList, SuccessRate, TopMistakeImg, ROUTER_DIRECTIVES],
     styleUrls: ['tsapp/dashboard/dashboard.css'],
 })
 

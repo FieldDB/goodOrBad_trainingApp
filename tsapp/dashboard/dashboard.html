@@ -1,4 +1,4 @@
-<h1>Dashboard Here for 
+<h1>Dashboard Here for
 	<span *ngIf='isManager'>Manager</span>
 	<span *ngIf='!isManager'>User</span>
 </h1>
@@ -23,7 +23,7 @@
 		<li (click)='section = "successRate"'>Success rate</li>
 		<!-- <li>Success rate on Good images.</li>
 		<li>Total system Good img vs Bad img.</li> -->
-		<li>Images that is mostly mistaked.</li>
+		<li (click)='section = "topMistakeImg"'>Images that is mostly mistaked.</li>
 		<li>Images that were Contested by trainee + All reason listed of all user. --> need username + Text + All missing or extra item.</li>
 		<li>Reason that fail the most.</li>
 		<li>Time Analysis</li>
@@ -33,5 +33,6 @@
 	<div>
 		<golden-img-list *ngIf='section == "goldenImgList"'></golden-img-list>
 		<success-rate *ngIf='section == "successRate"'></success-rate>
+		<top-mistake-img *ngIf='section == "topMistakeImg"'></top-mistake-img>
 	</div>
 </div>
