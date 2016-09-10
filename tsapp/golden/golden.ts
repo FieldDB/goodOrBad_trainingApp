@@ -118,48 +118,36 @@ export class Golden implements OnInit {
         console.log('Submitting the form', this.goldenDetails);
         // if there is a OID then update that exact image, otherwise push a new one.
 
-        if (!this.goldenDetails.oid) {
-            // New img so Submit as New.
-            this.commService.postNewGoldenImg(this.goldenDetails)
-                .subscribe(serverAnswer => {
-                    this.previousOid = serverAnswer[0].oid;
-                    let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
-                    if (critToSend[0] !== undefined) {
-                        this.commService.updateGoldenCrit(serverAnswer[0].uuid, critToSend)
-                          .subscribe(critAnswer => {
-                            this.resetBlankImg();
-                            // console.log('Success:', critAnswer);
-                          },
-                          error => {
-                              console.log('ERROR:', error);
-                          });
-                    }
-                },
-                error => {
-                    console.log('ERROR:', error);
-                });
-        } else {
-            // Update old img
-            this.commService.updateGoldenImg(this.goldenDetails, this.goldenDetails.oid)
-                .subscribe(serverAnswer => {
-                    this.previousOid = serverAnswer[0].oid;
-                    let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
-                    if (critToSend[0] !== undefined) {
-                        this.commService.updateGoldenCrit(serverAnswer[0].uuid, critToSend)
-                          .subscribe(critAnswer => {
-                            this.resetBlankImg();
-                            // console.log('Success:', critAnswer);
-                          },
-                          error => {
-                              console.log('ERROR:', error);
-                          });
-                    }
-                },
-                error => {
-                    console.log('ERROR:', error);
-                });
-        }
-
+        // New img Or Update old
+        this.commService.updateGoldenImg(this.goldenDetails, this.goldenDetails.oid)
+            .subscribe(serverAnswer => {
+                this.previousOid = serverAnswer[0].oid;
+                if (this.goldenDetails.deleted === true) {
+                    this.commService.deletecreteria()
+                      .subscribe(critAnswer => {
+                        this.resetBlankImg();
+                        console.log('DELETED:', critAnswer);
+                      },
+                      error => {
+                          console.log('ERROR:', error);
+                      });
+                } else {
+                  let critToSend: CriteriaToSend[] = this.builtKeyValueArr(this.goldenDetails.criteria_obj);
+                  if (critToSend[0] !== undefined) {
+                      this.commService.updateGoldenCrit(serverAnswer[0].uuid, critToSend)
+                        .subscribe(critAnswer => {
+                          this.resetBlankImg();
+                          // console.log('Success:', critAnswer);
+                        },
+                        error => {
+                            console.log('ERROR:', error);
+                        });
+                  }
+                }
+            },
+            error => {
+                console.log('ERROR:', error);
+            });
     }
 
     addToInfoUrl(newUrl: string) {

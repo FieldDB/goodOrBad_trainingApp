@@ -54,24 +54,22 @@ export class CommService {
             .catch(this.handleError);
     }
 
-    postNewGoldenImg(result: GoldenRow): Observable<ReturnInfo> {
+    updateGoldenImg(result: GoldenRow, oid?: number): Observable<ReturnInfo> {
         let body = JSON.stringify(result);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
+        let url = this.baseUrl + 'api/golden/' + oid;
 
-        return this.http.post(this.baseUrl + 'api/golden', body, options)
+        return this.http.post(url, body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    updateGoldenImg(result: GoldenRow, oid: number): Observable<ReturnInfo> {
-        let body = JSON.stringify(result);
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.post(this.baseUrl + 'api/golden/' + oid, body, options)
-            .map(this.extractData)
-            .catch(this.handleError);
+    deletecreteria(): Observable<ReturnInfo> {
+      let url: string = this.baseUrl + 'api/golden/deletecreteria/';
+      return this.http.get(url)
+          .map(this.extractData)
+          .catch(this.handleError);
     }
 
     updateGoldenCrit(uuid: string, critToSend: CriteriaToSend[]): Observable<{rowCount: number}> {
