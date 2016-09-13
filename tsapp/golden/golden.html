@@ -3,6 +3,8 @@ Option1: Get a Golden image from the system and modify it. Or Delete it (Add Del
 
 To Add, if the OID is in the route load it directly. <br>
 Add a "send" on enter key.
+<button class="btn btn-default" (click)='showList = !showList'>List view of Images</button>
+<golden-img-list *ngIf='showList'></golden-img-list>
 <div *ngIf='previousOid'>Previous Submitted img is {{previousOid}}</div>
 <div *ngIf='goldenDetails && criterialist'>
 <div class="row">

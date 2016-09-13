@@ -6,10 +6,11 @@ import 'rxjs/add/operator/toPromise';
 import { DefaultDataService } from '../data.service';
 import { GoldenRow, CriteriaObject, DbCriteria, CriteriaToSend } from '../data-structure';
 import { CommService } from '../commService';
+import { AllGoldenImgList } from '../dashboard/allGoldenImgList.component';
 
 @Component({
     selector: 'golden',
-    directives: [NgIf, NgFor, NgClass],
+    directives: [NgIf, NgFor, NgClass, AllGoldenImgList],
     styleUrls: ['tsapp/golden/golden.css', 'tsapp/common/slider-style.css'],
     templateUrl: 'tsapp/golden/golden.html',
     providers: [CommService, DefaultDataService]
@@ -22,6 +23,7 @@ export class Golden implements OnInit {
     previousUuid: string;
     manualOid: number;
     private sub: any;
+    showList: boolean = false;
 
     constructor(private commService: CommService,
         private defaultDataService: DefaultDataService,
