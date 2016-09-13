@@ -3,19 +3,17 @@
 	Start: {{listStart}}, listEnd: {{listEnd}}, Max: {{tableLength - 1}}
 		<div class="table_header">
 				<div class="col-xs-1">Edit</div>
-				<div class="col-xs-1">Pass/Fail</div>
 				<div class="col-xs-1">Creation</div>
-				<div class="col-xs-1">Deleted</div>
-				<div class="col-xs-4">Filename</div>
+				<div class="col-xs-1">Updated</div>
+				<div class="col-xs-5">Filename</div>
 				<div class="col-xs-4">Type</div>
 		</div>
 		<div class="fix_table_container">
-			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;'>
-				<div class="col-xs-1 text-center bg-info"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
-				<div class="col-xs-1">{{imgDetails.passfail}}</div>
+			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;' [ngClass]='{"bg-danger": imgDetails.deleted}'>
+				<div class="col-xs-1 text-center" [ngClass]="setClasswithValue(imgDetails.passfail)"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
 				<div class="col-xs-1">{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</div>
-				<div class="col-xs-1">Deleted???</div>
-				<div class="col-xs-4">{{imgDetails.filename}}</div>
+				<div class="col-xs-1">ADD Date</div>
+				<div class="col-xs-5">{{imgDetails.filename}}</div>
 				<div class="col-xs-4">{{imgDetails.type}}</div>
 			</div>
 		</div>

@@ -45,4 +45,12 @@ export class AllGoldenImgList implements OnInit {
         this.listEnd = this.steps * (page+1);
       }
     }
+
+    setClasswithValue = (passFail:boolean) => {
+      if(passFail === true) {
+        return 'bg-success';
+      } else if(passFail === false) {
+        return 'bg-danger';
+      }
+    }
 }
