@@ -15,7 +15,9 @@ export class AllGoldenImgList implements OnInit {
     allGoldenImgFromServer: GoldenRow[];
     listStart: number = 0;
     listEnd: number = 10;
+    steps: number = 10;
     tableLength: number;
+    pagination: number[];
 
     constructor(private commService: CommService) { }
     ngOnInit() {
@@ -28,6 +30,7 @@ export class AllGoldenImgList implements OnInit {
                 if (arrayOfImg[0]) {
                     this.allGoldenImgFromServer = arrayOfImg;
                     this.tableLength = arrayOfImg.length;
+                    this.pagination = Array(Math.ceil(this.tableLength/this.steps)).fill(1).map((undefined,i)=>i);
                 }
             },
             error => {
@@ -36,15 +39,10 @@ export class AllGoldenImgList implements OnInit {
             });
     }
 
-    scrollUpOrDownTheList(currentIndexLocation: number) {
-        if (currentIndexLocation === 0 && this.listStart > 0) {
-            // I hover at index 0 so I want to go up. Work if we are not at 0 already.
-            this.listEnd--;
-            this.listStart--;
-        } else if (currentIndexLocation === this.listEnd - this.listStart - 1 && this.listEnd <= this.tableLength) {
-            // I hover at the last row position so I want to go down. if possible.
-            this.listEnd++;
-            this.listStart++;
-        }
+    moveToPage = (page:number) => {
+      if(page !== undefined) {
+        this.listStart = this.steps * page;
+        this.listEnd = this.steps * (page+1);
+      }
     }
 }

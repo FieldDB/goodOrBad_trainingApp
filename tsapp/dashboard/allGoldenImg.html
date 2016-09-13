@@ -1,28 +1,37 @@
 <div *ngIf="allGoldenImgFromServer">
 	-TODO: possible to filter.
 	Start: {{listStart}}, listEnd: {{listEnd}}, Max: {{tableLength - 1}}
-	<table class="table table-striped">
-		<thead>
-			<tr>
-					<th>Edit</th>
-					<th>Pass/Fail</th>
-					<th>creation_date</th>
-					<th>filename</th>
-					<th>type</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;let i = index'
-			(mouseover)="scrollUpOrDownTheList(i)">
-				<td class="text-center bg-info"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></td>
-				<td>{{imgDetails.passfail}}</td>
-				<td>{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</td>
-				<td>{{imgDetails.filename}}</td>
-				<td>{{imgDetails.type}}</td>
-			</tr>
-		</tbody>
-	</table>
-
+		<div class="table_header">
+				<div class="col-xs-1">Edit</div>
+				<div class="col-xs-1">Pass/Fail</div>
+				<div class="col-xs-1">Creation</div>
+				<div class="col-xs-1">Deleted</div>
+				<div class="col-xs-4">Filename</div>
+				<div class="col-xs-4">Type</div>
+		</div>
+		<div class="fix_table_container">
+			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;'>
+				<div class="col-xs-1 text-center bg-info"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
+				<div class="col-xs-1">{{imgDetails.passfail}}</div>
+				<div class="col-xs-1">{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</div>
+				<div class="col-xs-1">Deleted???</div>
+				<div class="col-xs-4">{{imgDetails.filename}}</div>
+				<div class="col-xs-4">{{imgDetails.type}}</div>
+			</div>
+		</div>
+	<ul class="pagination">
+    <li (click)="moveToPage(0)">
+      <a aria-label="Previous">
+        <span>&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor='let page of pagination; let i = index' (click)="moveToPage(i)"><a>P:{{i}}</a></li>
+    <li (click)="moveToPage(pagination.length -1)">
+      <a aria-label="Next">
+        <span>&raquo;</span>
+      </a>
+    </li>
+  </ul>
 	<!-- <pre>{{allGoldenImgFromServer | json}}</pre> -->
 </div>
 <div class="text-center" *ngIf="!allGoldenImgFromServer"> Loading data... </div>
