@@ -19,6 +19,7 @@ export const BlankGoldenImg: GoldenRow = {
     description: '',
     criteria_obj: {},
     creation_date: '',
+    update_date: '',
     passfail: null,
     explanation: '',
     type: '',

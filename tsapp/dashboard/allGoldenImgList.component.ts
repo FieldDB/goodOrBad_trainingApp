@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
-import { GoldenRow } from '../data-structure';
+import { GoldenRow, SearchCriteria } from '../data-structure';
 import { CommService } from '../commService';
+import { FilterOnRequest } from './filter.pipe';
 
 @Component({
     selector: 'golden-img-list',
     templateUrl: 'tsapp/dashboard/allGoldenImg.html',
     styleUrls: ['tsapp/dashboard/dashboard.css'],
-    directives: [ ROUTER_DIRECTIVES ]
+    pipes: [ FilterOnRequest ],
+    directives: [ROUTER_DIRECTIVES]
 })
 
 export class AllGoldenImgList implements OnInit {
@@ -18,11 +20,19 @@ export class AllGoldenImgList implements OnInit {
     steps: number = 10;
     tableLength: number;
     pagination: number[];
+    search: SearchCriteria = {
+      name: '',
+      deleted: 'All',
+      status: 'All'
+    };
 
-    constructor(private commService: CommService) { }
+    constructor(private commService: CommService) {
+    }
     ngOnInit() {
         this.getAllImg();
     }
+
+
 
     private getAllImg() {
         this.commService.getAllGolden()
@@ -30,7 +40,7 @@ export class AllGoldenImgList implements OnInit {
                 if (arrayOfImg[0]) {
                     this.allGoldenImgFromServer = arrayOfImg;
                     this.tableLength = arrayOfImg.length;
-                    this.pagination = Array(Math.ceil(this.tableLength/this.steps)).fill(1).map((undefined,i)=>i);
+                    this.pagination = Array.from(new Array(Math.ceil(this.tableLength / this.steps)), (x, i) => i);
                 }
             },
             error => {
@@ -39,18 +49,18 @@ export class AllGoldenImgList implements OnInit {
             });
     }
 
-    moveToPage = (page:number) => {
-      if(page !== undefined) {
-        this.listStart = this.steps * page;
-        this.listEnd = this.steps * (page+1);
-      }
+    moveToPage = (page: number) => {
+        if (page !== undefined) {
+            this.listStart = this.steps * page;
+            this.listEnd = this.steps * (page + 1);
+        }
     }
 
-    setClasswithValue = (passFail:boolean) => {
-      if(passFail === true) {
-        return 'bg-success';
-      } else if(passFail === false) {
-        return 'bg-danger';
-      }
+    setClasswithValue = (passFail: boolean) => {
+        if (passFail === true) {
+            return 'bg-success';
+        } else if (passFail === false) {
+            return 'bg-danger';
+        }
     }
 }

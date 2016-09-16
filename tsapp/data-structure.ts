@@ -5,6 +5,7 @@ export class GoldenRow {
     criteria_obj: {[key: string]: number};
     // This is SUPER strange, but the input "range" write a string in reality not a number. :/
     creation_date: string;
+    update_date: string;
     passfail: boolean;
     explanation: string;
     type: string;
@@ -103,4 +104,10 @@ export class ReturnInfo {
 export class CriteriaToSend {
   'crit_uuid': string;
   'value': string | number;
+}
+
+export class SearchCriteria {
+    name: string;
+    deleted: string;
+    status: string;
 }

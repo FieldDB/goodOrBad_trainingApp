@@ -1,6 +1,39 @@
 <div *ngIf="allGoldenImgFromServer">
 	-TODO: possible to filter.
 	Start: {{listStart}}, listEnd: {{listEnd}}, Max: {{tableLength - 1}}
+	<div class="row">
+		<div class="form-group col-xs-3">
+			<div class="input-group">
+				<div class="input-group-addon">Deleted</div>
+				<select class="form-control" id="deleted"
+						 [(ngModel)]="search.deleted" name="deleted">
+						 <option *ngFor="let del of ['Deleted', 'Active', 'All']" [value]="del">{{del}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group col-xs-3">
+			<div class="input-group">
+				<div class="input-group-addon">Status</div>
+				<select class="form-control"  id="status"
+								required
+								[(ngModel)]="search.status" name="status">
+					<option *ngFor="let p of ['Pass', 'Fail', 'All']" [value]="p">{{p}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group col-xs-6">
+			<div class="input-group">
+				<div class="input-group-addon">Title</div>
+			  <input type="text" class="form-control" id="name"
+			         [(ngModel)]="search.name" name="name">
+			</div>
+		</div>
+
+
+		<pre>
+			{{search | json}}
+		</pre>
+	</div>
 		<div class="table_header">
 				<div class="col-xs-1">Edit</div>
 				<div class="col-xs-1">Creation</div>
@@ -9,7 +42,7 @@
 				<div class="col-xs-4">Type</div>
 		</div>
 		<div class="fix_table_container">
-			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | slice:listStart:listEnd;' [ngClass]='{"bg-danger": imgDetails.deleted}'>
+			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | filterOnRequest:search.deleted:search.status:search.name | slice:listStart:listEnd;' [ngClass]='{"bg-danger": imgDetails.deleted}'>
 				<div class="col-xs-1 text-center" [ngClass]="setClasswithValue(imgDetails.passfail)"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
 				<div class="col-xs-1">{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</div>
 				<div class="col-xs-1">ADD Date</div>
@@ -23,7 +56,7 @@
         <span>&laquo;</span>
       </a>
     </li>
-    <li *ngFor='let page of pagination; let i = index' (click)="moveToPage(i)"><a>P:{{i}}</a></li>
+    <li *ngFor='let page of pagination; let i = index' (click)="moveToPage(i)"><a>{{i + 1}}</a></li>
     <li (click)="moveToPage(pagination.length -1)">
       <a aria-label="Next">
         <span>&raquo;</span>
