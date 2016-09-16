@@ -45,7 +45,7 @@
 			<div class="row" *ngFor='let imgDetails of allGoldenImgFromServer | filterOnRequest:search.deleted:search.status:search.name | slice:listStart:listEnd;' [ngClass]='{"bg-danger": imgDetails.deleted}'>
 				<div class="col-xs-1 text-center" [ngClass]="setClasswithValue(imgDetails.passfail)"><a routerLink="/golden/{{imgDetails.oid}}">{{imgDetails.oid}}</a></div>
 				<div class="col-xs-1">{{imgDetails.creation_date | date:"yyyy/MM/dd"}}</div>
-				<div class="col-xs-1">ADD Date</div>
+				<div class="col-xs-1">{{imgDetails.update_date | date:"yyyy/MM/dd"}}</div>
 				<div class="col-xs-5">{{imgDetails.filename}}</div>
 				<div class="col-xs-4">{{imgDetails.type}}</div>
 			</div>

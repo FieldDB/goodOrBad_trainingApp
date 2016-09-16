@@ -58,7 +58,8 @@ export class CommService {
         let body = JSON.stringify(result);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let url = this.baseUrl + 'api/golden/' + oid;
+        let url = this.baseUrl + 'api/golden/';
+        if (oid) { url += oid; }
 
         return this.http.post(url, body, options)
             .map(this.extractData)
