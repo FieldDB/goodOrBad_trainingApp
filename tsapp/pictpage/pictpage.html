@@ -9,10 +9,9 @@
 	  	</a>
 	  	<div class="col-sm-6">
   			<div *ngFor="let criteria of (criterialist | getOnlyActive); let i = index" class="row">
-					<pre> {{criteria | json}} </pre>
   				<div class="col-xs-12"
 						[ngClass]='{"col-xs-10": submited }'
-						*ngIf='imgToInspect.criteria_obj && imgToInspect.criteria_obj[criteria.uuid]'
+						*ngIf='imgToInspect.criteria_obj != undefined && imgToInspect.criteria_obj[criteria.uuid] != undefined'
 						(click)='validateCompletion(imgToInspect.criteria_obj, resultValue.answer)'>
 	  				<div>{{criteria.name}} -- {{resultValue.answer[criteria.uuid]}}
 							<span *ngIf='submited'> Target: {{imgToInspect.criteria_obj[criteria.uuid]}}</span>

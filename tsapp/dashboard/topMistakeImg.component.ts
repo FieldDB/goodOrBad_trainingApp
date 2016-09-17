@@ -14,6 +14,6 @@ export class TopMistakeImg implements OnInit {
 
   constructor(private commService: CommService) { }
   ngOnInit() {
-    console.log('Initialisation of TopMistakeImg')
+    console.log('Initialisation of TopMistakeImg');
   }
 }

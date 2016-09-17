@@ -154,7 +154,7 @@ Add a "send" on enter key.
 		  </div>
 			<div class='form-group text-center'>
 		  	<div type="button" class='btn btn-lg btn-default validationbtn' [ngClass]="{'btn-danger': !goldenDetails.deleted}"
-				(click)="goldenDetails.deleted = !goldenDetails.deleted">
+				(click)="goldenDetails.deleted = !goldenDetails.deleted;onSubmit()">
 					<span *ngIf='!goldenDetails.deleted'>Delete</span>
 					<span *ngIf='goldenDetails.deleted'>Restore</span>
 				</div>
@@ -164,6 +164,6 @@ Add a "send" on enter key.
 
 </form>
 
-<pre>{{goldenDetails | json}}</pre>
+<!-- <pre>{{goldenDetails | json}}</pre> -->
 </div>
 </div>
