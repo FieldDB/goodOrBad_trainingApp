@@ -33,7 +33,7 @@ export class FilterOnRequest implements PipeTransform {
         }
       }
       if (allGood) {
-        return golden;
+        return true;
       }
     });
   };

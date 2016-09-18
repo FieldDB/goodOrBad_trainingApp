@@ -16,8 +16,8 @@ import { FilterOnRequest } from './filter.pipe';
 export class AllGoldenImgList implements OnInit {
     allGoldenImgFromServer: GoldenRow[];
     listStart: number = 0;
-    listEnd: number = 10;
-    steps: number = 10;
+    listEnd: number = 20;
+    steps: number = 20;
     tableLength: number;
     pagination: number[];
     search: SearchCriteria = {
